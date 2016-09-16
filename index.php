@@ -35,6 +35,8 @@ Index.php
                     <img src="./images/thumbs/01.jpg" alt="" />
                     <h3>Lab 1</h3>
                 </a>
+            </div>
+            <div>
                 <a href="./lab2/labTwo.php">
                     <img src="images/thumbs/02.jpg" alt="" />
                     <h3>Lab 2</h3>

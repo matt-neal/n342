@@ -6,97 +6,156 @@ labOne.php
 -->
 
 <!DOCTYPE HTML>
+
 <!--
 	Visualize by TEMPLATED
 	templated.co @templatedco
 	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
 -->
+
 <html>
+
 <?php
-include "./head.php";
+    require_once "../inc/util.php";
+    require_once "../mail/mail.class.php";
+    include "./head.php";
 ?>
+
 <body>
 
-    <?php
-        $msg = "";
-        $fName = "";
-        $firstNameRequired = "*";
-        $lName = "";
-        $lastNameRequired = "*";
-        $pWord = "";
-        $passwordRequired = "*";
-        $passwordConfirmation = "";
-        $eMail = "";
-        $emailRequired = "*";
-        $emailConfirmation = "";
-        $userDept = "";
-        $userStatus = "";
-        $userGender = "";
-        $mChecked = "";
-        $fChecked = "";
-        $termsReq = "*";
+<?php
+    $msg = "";
+    $fName = "";
+    $firstNameRequired = "*";
+    $lName = "";
+    $lastNameRequired = "*";
+    $pWord = "";
+    $passwordRequired = "*";
+    $passwordConfirmation = "";
+    $eMail = "";
+    $emailRequired = "*";
+    $emailConfirmation = "";
+    $userDept = "";
+    $userStatus = "";
+    $userGender = "";
+    $mChecked = "";
+    $fChecked = "";
+    $termsReq = "*";
 
-        if (isset($_POST['enter']))
+    if (isset($_POST['enter']))
+    {
+        //ensure no white space
+        $fName = trim($_POST['firstName']);
+        $lName = trim($_POST['lastName']);
+        $eMail = trim($_POST['email']);
+        $emailConfirmation = trim($_POST['emailConfirm']);
+        $pWord = trim($_POST['password']);
+        $passwordConfirmation = trim($_POST['passwordConfirm']);
+        $userGender = trim($_POST['gender']);
+        $userStatus = trim($_POST['status']);
+        $userDept = trim($_POST['department']);
+        $pWordCheck = false;
+
+        if ($fName == "") {
+            $firstNameRequired = '<span style = "color: red">*</span>';
+        };
+
+        if ($lName == "") {
+            $lastNameRequired = '<span style = "color: red">*</span>';
+        };
+
+        if (!pwdValidate($pWord)) {
+            $msg = 'Password is not in the required format.';
+        } else {
+            if ($pWord != $passwordConfirmation)
+                $msg = "Passwords are not the same.";
+            else $pWordCheck = true;
+        }
+
+        if (!filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
+            $emailRequired = '<span style="color:red">*</span>';
+        } else {
+            if ($userGender == "Male") {
+                $mChecked = "checked";
+                $fChecked = "";
+            } else {
+                $mChecked = "";
+                $fChecked = "checked";
+            };
+
+            if ($eMail != $emailConfirmation) {
+                $msg = "Please enter matching emails.";
+            } elseif ($pWord != $passwordConfirmation) {
+                $msg = "Please enter matching passwords.";
+            } elseif (($firstNameRequired != "*") or ($lastNameRequired != "*") or ($emailRequired != "*") or ($termsReq != "*")) {
+                $msg = "Please enter valid data.";
+
+            } else {
+                    //send the email to the email registered for activating the account
+                    $code = randomCodeGenerator(50);
+                    $subject = "Email Activation";
+
+                    $body = 'Your code is '.$code;
+                    $mailer = new Mail();
+                    if (($mailer->sendMail($eMail, $fName, $subject, $body)) == true){
+                        $msg = "<b>Thank you for registering. A welcome message has been sent to the address you have just registered.</b>";
+                    }
+
+                    else {
+                        $msg = "Email not sent. ";
+                    }
+
+                    //direct to another file to process using query strings
+                    header("Location:confirmation.php?fN={$fName}&lN={$lName}&eM={$eMail}&uG={$userGender}&uD={$userDept}&uS={$userStatus}&pW={$pWord}");
+                }
+            };
+    }
+
+/*This function will validate if user created a strong password
+* Longer than 12 characters and alphanumeric letters.
+*/
+function pwdValidate($field)
+{
+    $field = trim($field);
+    if (strlen($field) < 10)
+    {
+        return false;
+    }
+    else
+    {
+        //go through each character and find if there is a number or letter
+        $letter = false;
+        $number = false;
+        $chars = str_split($field);
+
+        for ($i = 0; $i < strlen($field); $i++)
+        {
+            if (preg_match("/[A-Za-z]/", $chars[$i]))
             {
-                //ensure no white space
-                $fName = trim($_POST['firstName']);
-                $lName = trim($_POST['lastName']);
-                $eMail = trim($_POST['email']);
-                $emailConfirmation = trim($_POST['emailConfirm']);
-                $pWord = trim($_POST['password']);
-                $passwordConfirmation = trim($_POST['passwordConfirm']);
-                $userGender = trim($_POST['gender']);
-                $userStatus = trim($_POST['status']);
-                $userDept = trim($_POST['department']);
-
-                if ($fName == "")
-                    {
-                        $firstNameRequired = '<span style = "color: red">*</span>';
-                    };
-
-                if ($lName == "")
-                    {
-                        $lastNameRequired = '<span style = "color: red">*</span>';
-                    };
-
-                if (!filter_input(INPUT_POST, 'email',FILTER_VALIDATE_EMAIL))
-                    $emailRequired= '<span style="color:red">*</span>';
-
-                else
-
-                    if ($userGender == "Male")
-                    {
-                        $mChecked = "checked";
-                        $fChecked = "";
-                    }
-                else
-                    {
-                        $mChecked = "";
-                        $fChecked = "checked";
-                    };
-
-                if ($eMail != $emailConfirmation)
-                    {
-                        $msg = "<br />Please enter matching emails.<br />";
-                    }
-
-                elseif ($pWord != $passwordConfirmation)
-                    {
-                        $msg = "<br />Please enter matching passwords.<br />";
-                    }
-
-                elseif (($firstNameRequired != "*") or ($lastNameRequired != "*") or ($emailRequired != "*") or ($termsReq != "*"))
-                    {
-                        $msg = "<br />Please enter valid data.<br />";
-                    }
-
-                else
-                    {
-                        //direct to another file to process using query strings
-                        header ("Location:confirmation.php?fN={$fName}&lN={$lName}&eM={$eMail}&uG={$userGender}&uD={$userDept}&uS={$userStatus}&pW={$pWord}");
-                    };
+                $letter = true;
+                break;
             }
-    ?>
+        }
+
+        for ($i = 0; $i < strlen($field); $i++)
+        {
+            if (preg_match("/[0-9]/", $chars[$i]))
+            {
+                $number = true;
+                break;
+            }
+        }
+
+        if (($letter == true) and ($number == true))
+        {
+            return true;
+        }
+
+        else return false;
+    }
+}
+
+?>
 
 <!-- Wrapper -->
 <div id="wrapper">
@@ -157,11 +216,11 @@ include "./head.php";
 
         <button name="enter" class="btn" type="submit">Sign Up</button>
     </form>
-</html>
-    <!-- Footer -->
-    <?php
+
+<!-- Footer -->
+<?php
     include "./footer.php"
-    ?>
+?>
 
 </div>
 
