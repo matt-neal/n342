@@ -95,7 +95,7 @@ labOne.php
                     $code = randomCodeGenerator(50);
                     $subject = "Email Activation";
 
-                    $body = 'Your code is '.$code;
+                    $body = '<a href="http://corsair.cs.iupui.edu:20181/login.php">Your code is <?php .$code ?></a>';
                     $mailer = new Mail();
                     if (($mailer->sendMail($eMail, $fName, $subject, $body)) == true){
                         $msg = "<b>Thank you for registering. A welcome message has been sent to the address you have just registered.</b>";
