@@ -101,7 +101,7 @@ include "./head.php";
 <!-- Wrapper -->
 <div id="wrapper">
 
-    <form action="labOne.php" method="post">
+    <form action="labTwo.php" method="post">
 
         <h1>Register</h1>
 

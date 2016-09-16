@@ -35,12 +35,12 @@ Index.php
                     <img src="./images/thumbs/01.jpg" alt="" />
                     <h3>Lab 1</h3>
                 </a>
-                <!--<a href="images/fulls/02.jpg">
+                <a href="./lab2/labTwo.php">
                     <img src="images/thumbs/02.jpg" alt="" />
                     <h3>Lab 2</h3>
                 </a>
             </div>
-            <div>
+            <!--<div>
                 <a href="images/fulls/03.jpg">
                     <img src="images/thumbs/03.jpg" alt="" />
                     <h3>Lorem ipsum dolor sit amet</h3>
