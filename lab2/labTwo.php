@@ -1,8 +1,10 @@
 <!--
 Matthew Neal
 CSCI N-342
-Completed 9-9-16
-labOne.php
+Completed 9-16-16
+labTwo.php
+
+PLEASE READ BOTH THIS FILE and LOGIN.PHP
 -->
 
 <!DOCTYPE HTML>
@@ -92,10 +94,12 @@ labOne.php
 
             } else {
                     //send the email to the email registered for activating the account
+                    //written by Andy Harris for his PHP/MySql book, modified for this lab to match
+                    //my variables and requirements
                     $code = randomCodeGenerator(50);
                     $subject = "Email Activation";
 
-                    $body = '<a href="http://corsair.cs.iupui.edu:20181/login.php">Your code is <?php .$code ?></a>';
+                    $body = '<a href="http://corsair.cs.iupui.edu:20181/login.php">Your code is '.$code.'</a>';
                     $mailer = new Mail();
                     if (($mailer->sendMail($eMail, $fName, $subject, $body)) == true){
                         $msg = "<b>Thank you for registering. A welcome message has been sent to the address you have just registered.</b>";
