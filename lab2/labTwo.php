@@ -99,7 +99,7 @@ PLEASE READ BOTH THIS FILE and LOGIN.PHP
                     $code = randomCodeGenerator(50);
                     $subject = "Email Activation";
 
-                    $body = '<a href="http://corsair.cs.iupui.edu:20181/lab2/login.php">Your code is '.$code.'</a>';
+                    $body = '<a href="http://corsair.cs.iupui.edu:20181/lab2/login.php?code='.$code.'">Your code is '.$code.'</a>';
                     $mailer = new Mail();
                     if (($mailer->sendMail($eMail, $fName, $subject, $body)) == true){
                         $msg = "<b>Thank you for registering. A welcome message has been sent to the address you have just registered.</b>";

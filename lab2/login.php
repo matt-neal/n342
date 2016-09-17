@@ -22,78 +22,80 @@ include "./head.php";
 ?>
 
 <body>
-
 <?php
-$msg = "";
-$pWord = "";
-$eMail = "";
+if (isset($_GET['code'])) {
+    $code = ($_GET['code']);
+    if (strlen($code) == '50') {
 
-if (isset($_POST['enter'])) {
-    //ensure no white space
-    $eMail = trim($_POST['email']);
-    $pWord = trim($_POST['password']);
-    $pWordCheck = false;
+        $message = "Activation Successful!";
+        echo "<script type='text/javascript'>alert('$message');</script>";
 
-    //commented out until password validation is checked
-    /*if (!pwdValidate($pWord)) {
-        $msg = 'Password is not in the required format.';
-    } else {
-        if ($pWord != $passwordConfirmation)
-            $msg = "Passwords are not the same.";
-        else $pWordCheck = true;
-    }*/
+        $msg = "";
+        $pWord = "";
+        $eMail = "";
 
-    if (!filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
-    } else {
-        //direct to another file to process using query strings
-        header("Location:index.php");
-    };
-}
+        if (isset($_POST['enter'])) {
+            //ensure no white space
+            $eMail = trim($_POST['email']);
+            $pWord = trim($_POST['password']);
+            $pWordCheck = false;
 
-/*This function will validate if user created a strong password
-* Longer than 12 characters and alphanumeric letters.
-*/
-function pwdValidate($field)
-{
-    $field = trim($field);
-    if (strlen($field) < 10)
-    {
-        return false;
-    }
-    else
-    {
-        //go through each character and find if there is a number or letter
-        $letter = false;
-        $number = false;
-        $chars = str_split($field);
+            //commented out until password validation is checked
+            /*if (!pwdValidate($pWord)) {
+                $msg = 'Password is not in the required format.';
+            } else {
+                if ($pWord != $passwordConfirmation)
+                    $msg = "Passwords are not the same.";
+                else $pWordCheck = true;
+            }*/
 
-        for ($i = 0; $i < strlen($field); $i++)
+            if (!filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
+            } else {
+                //direct to another file to process using query strings
+                header("Location:index.php");
+            };
+        }
+
+        /*This function will validate if user created a strong password
+        * Longer than 12 characters and alphanumeric letters.
+        */
+        function pwdValidate($field)
         {
-            if (preg_match("/[A-Za-z]/", $chars[$i]))
-            {
-                $letter = true;
-                break;
+            $field = trim($field);
+            if (strlen($field) < 10) {
+                return false;
+            } else {
+                //go through each character and find if there is a number or letter
+                $letter = false;
+                $number = false;
+                $chars = str_split($field);
+
+                for ($i = 0; $i < strlen($field); $i++) {
+                    if (preg_match("/[A-Za-z]/", $chars[$i])) {
+                        $letter = true;
+                        break;
+                    }
+                }
+
+                for ($i = 0; $i < strlen($field); $i++) {
+                    if (preg_match("/[0-9]/", $chars[$i])) {
+                        $number = true;
+                        break;
+                    }
+                }
+
+                if (($letter == true) and ($number == true)) {
+                    return true;
+                } else return false;
             }
         }
+    }
 
-        for ($i = 0; $i < strlen($field); $i++)
-        {
-            if (preg_match("/[0-9]/", $chars[$i]))
-            {
-                $number = true;
-                break;
-            }
-        }
-
-        if (($letter == true) and ($number == true))
-        {
-            return true;
-        }
-
-        else return false;
+    else {
+        $message = "Activation Failed!";
+        echo "<script type='text/javascript'>alert('$message');</script>";
     }
 }
-
 ?>
 
 <!-- Wrapper -->
