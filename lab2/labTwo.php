@@ -68,11 +68,13 @@ PLEASE READ BOTH THIS FILE and LOGIN.PHP
 
         if (!filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
             $emailRequired = '<span style="color:red">*</span>';
-        } else {
+        }
+        else {
             if ($userGender == "Male") {
                 $mChecked = "checked";
                 $fChecked = "";
-            } else {
+            }
+            else {
                 $mChecked = "";
                 $fChecked = "checked";
             };
@@ -80,16 +82,21 @@ PLEASE READ BOTH THIS FILE and LOGIN.PHP
             if (!pwdValidate($pWord)) {
                 $msg = 'Password is not in the required format of 10 or more characters containing at least one letter and on number.';
                 $pWord = "";
-            } else {
+                $passwordConfirmation = "";
+            }
+            else {
                 if ($pWord != $passwordConfirmation) {
                     $msg = "Passwords are not the same.";
-                } else $pWordCheck = true;
+                }
+                else $pWordCheck = true;
                 {
                     if ($eMail != $emailConfirmation) {
                         $msg = "Please enter matching emails.";
-                    } elseif (($firstNameRequired != "*") or ($lastNameRequired != "*") or ($emailRequired != "*") or ($termsReq != "*")) {
+                    }
+                    elseif (($firstNameRequired != "*") or ($lastNameRequired != "*") or ($emailRequired != "*") or ($termsReq != "*")) {
                         $msg = "Please enter valid data.";
-                    } else {
+                    }
+                    else {
                         //send the email to the email registered for activating the account
                         //written by Andy Harris for his PHP/MySql book, modified for this lab to match
                         //my variables and requirements
@@ -100,7 +107,8 @@ PLEASE READ BOTH THIS FILE and LOGIN.PHP
                         $mailer = new Mail();
                         if (($mailer->sendMail($eMail, $fName, $subject, $body)) == true) {
                             $msg = "<b>Thank you for registering. A welcome message has been sent to the address you have just registered.</b>";
-                        } else {
+                        }
+                        else {
                             $msg = "Email not sent. ";
                         }
 
@@ -115,40 +123,32 @@ PLEASE READ BOTH THIS FILE and LOGIN.PHP
 /*This function will validate if user created a strong password
 * Longer than 12 characters and alphanumeric letters.
 */
-function pwdValidate($field)
-{
-    if (strlen($field) < 10)
-    {
+function pwdValidate($field) {
+    if (strlen($field) < 10) {
         return false;
     }
 
-    else
-    {
+    else {
         //go through each character and find if there is a number or letter
         $letter = false;
         $number = false;
         $chars = str_split($field);
 
-        for ($i = 0; $i < strlen($field); $i++)
-        {
-            if (preg_match("/[A-Za-z]/", $chars[$i]))
-            {
+        for ($i = 0; $i < strlen($field); $i++) {
+            if (preg_match("/[A-Za-z]/", $chars[$i])) {
                 $letter = true;
                 break;
             }
         }
 
-        for ($i = 0; $i < strlen($field); $i++)
-        {
-            if (preg_match("/[0-9]/", $chars[$i]))
-            {
+        for ($i = 0; $i < strlen($field); $i++) {
+            if (preg_match("/[0-9]/", $chars[$i])) {
                 $number = true;
                 break;
             }
         }
 
-        if (($letter == true) and ($number == true))
-        {
+        if (($letter == true) and ($number == true)) {
             return true;
         }
 
@@ -177,13 +177,13 @@ function pwdValidate($field)
             <input type="email" id="email" placeholder="btables@iupui.edu" name="email" value="<?php print $eMail; ?>" required>
 
             <label for="emailConfirm">Confirm Email:</label>
-            <input type="email" id="emailConfirm" name="emailConfirm" value="<?php print $emailConfirmation; ?>" required>
+            <input type="email" id="emailConfirm" name="emailConfirm" placeholder="Please Confirm Email" value="<?php print $emailConfirmation; ?>" required>
 
             <label for="password">Password: <?php print $passwordRequired; ?></label>
             <input type="password" id="password" name="password" value="<?php print $pWord; ?>" required>
 
             <label for="password">Confirm Password:</label>
-            <input type="password" id="passwordConfirm" name="passwordConfirm" value="<?php print $passwordConfirmation; ?>" required>
+            <input type="password" id="passwordConfirm" placeholder="Please Confirm Password" name="passwordConfirm" value="<?php print $passwordConfirmation; ?>" required>
 
             <label>Gender:</label>
             <input type="radio" id="Male" value="Male" name="gender" <?php print $maleChecked; ?> checked><label for="Male" class="light">Male</label><br>
