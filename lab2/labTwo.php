@@ -86,12 +86,15 @@ PLEASE READ BOTH THIS FILE and LOGIN.PHP
             }
             else {
                 if ($pWord != $passwordConfirmation) {
-                    $msg = "Passwords are not the same.";
+                    $msg = "Please enter matching passwords.";
                 }
                 else $pWordCheck = true;
                 {
                     if ($eMail != $emailConfirmation) {
                         $msg = "Please enter matching emails.";
+                    }
+                    elseif ($pWord != $passwordConfirmation) {
+                        $msg = "Please enter matching passwords.";
                     }
                     elseif (($firstNameRequired != "*") or ($lastNameRequired != "*") or ($emailRequired != "*") or ($termsReq != "*")) {
                         $msg = "Please enter valid data.";
