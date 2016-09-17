@@ -111,7 +111,7 @@ function pwdValidate($field)
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required>
 
-        <button name="enter" class="btn" type="submit">Log Up</button>
+        <button name="enter" class="btn" type="submit">Log In</button>
     </form>
 
     <!-- Footer -->

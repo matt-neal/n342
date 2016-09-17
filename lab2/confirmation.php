@@ -29,6 +29,7 @@ include "./head.php";
         $userDept = "";
         $userStatus = "";
         $pWord = "";
+        $msg = "";
         $fName = $_GET['fN'];
         $lName = $_GET['lN'];
         $eMail = $_GET['eM'];
@@ -36,10 +37,12 @@ include "./head.php";
         $userGender = $_GET['uG'];
         $userDept = $_GET['uD'];
         $userStatus = $_GET['uS'];
+        $msg = $_GET['mG'];
 
     $hereDoc = <<<HERE
         
     <h1>User Registration Confirmation</h1>
+    <h3>$msg</h3>
     <label>Name: $fName $lName</label> 
     <label>Email: $eMail</label> 
     <label>Password: $pWord</label>  

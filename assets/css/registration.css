@@ -9,6 +9,10 @@ h1 {
     font-weight: bolder;
 }
 
+h3 {
+    text-align: center;
+}
+
 form {
     max-width: 300px;
     margin: 8px auto;

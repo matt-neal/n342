@@ -99,7 +99,7 @@ PLEASE READ BOTH THIS FILE and LOGIN.PHP
                     $code = randomCodeGenerator(50);
                     $subject = "Email Activation";
 
-                    $body = '<a href="http://corsair.cs.iupui.edu:20181/login.php">Your code is '.$code.'</a>';
+                    $body = '<a href="http://corsair.cs.iupui.edu:20181/lab2/login.php">Your code is '.$code.'</a>';
                     $mailer = new Mail();
                     if (($mailer->sendMail($eMail, $fName, $subject, $body)) == true){
                         $msg = "<b>Thank you for registering. A welcome message has been sent to the address you have just registered.</b>";
@@ -110,7 +110,7 @@ PLEASE READ BOTH THIS FILE and LOGIN.PHP
                     }
 
                     //direct to another file to process using query strings
-                    header("Location:confirmation.php?fN={$fName}&lN={$lName}&eM={$eMail}&uG={$userGender}&uD={$userDept}&uS={$userStatus}&pW={$pWord}");
+                    header("Location:confirmation.php?mG={$msg}&fN={$fName}&lN={$lName}&eM={$eMail}&uG={$userGender}&uD={$userDept}&uS={$userStatus}&pW={$pWord}");
                 }
             };
     }
