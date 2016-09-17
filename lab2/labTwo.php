@@ -44,8 +44,7 @@ PLEASE READ BOTH THIS FILE and LOGIN.PHP
     $fChecked = "";
     $termsReq = "*";
 
-    if (isset($_POST['enter']))
-    {
+    if (isset($_POST['enter'])) {
         //ensure no white space
         $fName = trim($_POST['firstName']);
         $lName = trim($_POST['lastName']);
@@ -66,13 +65,6 @@ PLEASE READ BOTH THIS FILE and LOGIN.PHP
             $lastNameRequired = '<span style = "color: red">*</span>';
         };
 
-        if (!pwdValidate($pWord)) {
-            $msg = 'Password is not in the required format.';
-        } else {
-            if ($pWord != $passwordConfirmation)
-                $msg = "Passwords are not the same.";
-            else $pWordCheck = true;
-        }
 
         if (!filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
             $emailRequired = '<span style="color:red">*</span>';
@@ -85,34 +77,39 @@ PLEASE READ BOTH THIS FILE and LOGIN.PHP
                 $fChecked = "checked";
             };
 
-            if ($eMail != $emailConfirmation) {
-                $msg = "Please enter matching emails.";
-            } elseif ($pWord != $passwordConfirmation) {
-                $msg = "Please enter matching passwords.";
-            } elseif (($firstNameRequired != "*") or ($lastNameRequired != "*") or ($emailRequired != "*") or ($termsReq != "*")) {
-                $msg = "Please enter valid data.";
-
+            if (!pwdValidate($pWord)) {
+                $msg = 'Password is not in the required format of 10 or more characters containing at least one letter and on number.';
+                $pWord = "";
             } else {
-                    //send the email to the email registered for activating the account
-                    //written by Andy Harris for his PHP/MySql book, modified for this lab to match
-                    //my variables and requirements
-                    $code = randomCodeGenerator(50);
-                    $subject = "Email Activation";
+                if ($pWord != $passwordConfirmation) {
+                    $msg = "Passwords are not the same.";
+                } else $pWordCheck = true;
+                {
+                    if ($eMail != $emailConfirmation) {
+                        $msg = "Please enter matching emails.";
+                    } elseif (($firstNameRequired != "*") or ($lastNameRequired != "*") or ($emailRequired != "*") or ($termsReq != "*")) {
+                        $msg = "Please enter valid data.";
+                    } else {
+                        //send the email to the email registered for activating the account
+                        //written by Andy Harris for his PHP/MySql book, modified for this lab to match
+                        //my variables and requirements
+                        $code = randomCodeGenerator(50);
+                        $subject = "Email Activation";
 
-                    $body = '<a href="http://corsair.cs.iupui.edu:20181/lab2/login.php?code='.$code.'">Your code is '.$code.'</a>';
-                    $mailer = new Mail();
-                    if (($mailer->sendMail($eMail, $fName, $subject, $body)) == true){
-                        $msg = "<b>Thank you for registering. A welcome message has been sent to the address you have just registered.</b>";
+                        $body = '<a href="http://corsair.cs.iupui.edu:20181/lab2/login.php?code=' . $code . '">Your code is ' . $code . '</a>';
+                        $mailer = new Mail();
+                        if (($mailer->sendMail($eMail, $fName, $subject, $body)) == true) {
+                            $msg = "<b>Thank you for registering. A welcome message has been sent to the address you have just registered.</b>";
+                        } else {
+                            $msg = "Email not sent. ";
+                        }
+
+                        //direct to another file to process using query strings
+                        header("Location:confirmation.php?mG={$msg}&fN={$fName}&lN={$lName}&eM={$eMail}&uG={$userGender}&uD={$userDept}&uS={$userStatus}&pW={$pWord}");
                     }
-
-                    else {
-                        $msg = "Email not sent. ";
-                    }
-
-                    //direct to another file to process using query strings
-                    header("Location:confirmation.php?mG={$msg}&fN={$fName}&lN={$lName}&eM={$eMail}&uG={$userGender}&uD={$userDept}&uS={$userStatus}&pW={$pWord}");
                 }
-            };
+            }
+        }
     }
 
 /*This function will validate if user created a strong password
@@ -120,11 +117,11 @@ PLEASE READ BOTH THIS FILE and LOGIN.PHP
 */
 function pwdValidate($field)
 {
-    $field = trim($field);
     if (strlen($field) < 10)
     {
         return false;
     }
+
     else
     {
         //go through each character and find if there is a number or letter
