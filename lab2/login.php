@@ -25,12 +25,13 @@ include "./head.php";
 <?php
 if (isset($_GET['code'])) {
     $code = ($_GET['code']);
-    if (strlen($code) == '50') {
 
+    if (strlen($code) == '50') {
+        $msg = "";
         $message = "Activation Successful!";
+
         echo "<script type='text/javascript'>alert('$message');</script>";
 
-        $msg = "";
         $pWord = "";
         $eMail = "";
 
