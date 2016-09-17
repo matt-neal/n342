@@ -95,6 +95,8 @@ PLEASE READ BOTH THIS FILE and LOGIN.PHP
                     }
                     elseif ($pWord != $passwordConfirmation) {
                         $msg = "Please enter matching passwords.";
+                        $pWord = "";
+                        $passwordConfirmation = "";
                     }
                     elseif (($firstNameRequired != "*") or ($lastNameRequired != "*") or ($emailRequired != "*") or ($termsReq != "*")) {
                         $msg = "Please enter valid data.";
