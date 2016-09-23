@@ -40,6 +40,7 @@ $firstName = "";
 $lastName = "";
 $email = "";
 $phone = "";
+$userDetails = "";
 
 
 if (isset($_POST['enter'])) {
@@ -51,9 +52,10 @@ if (isset($_POST['enter'])) {
 
 
     //post an array to the log in page
-    $userArray = array($eMail);
-    $userSessionArray = $_SESSION['userDetails'] = $userArray;
-
+    $userArray = array($fName,$lName,$eMail,$pNumber);
+    $_SESSION['userDetails'] = $userArray;
+    $msg = $_SESSION['userDetails'];
+    print_r($msg);
 }
 ?>
 
@@ -64,19 +66,18 @@ if (isset($_POST['enter'])) {
 
         <h1>Please Enter User Information</h1>
         <h3>All Fields Required</h3>
-        <?php print $msg; ?>
 
         <label for="firstName">First Name: </label>
-        <input type="text" id="firstName" placeholder="Bobby" name="firstName" value="<?php print $fName; ?>" required>
+        <input type="text" id="firstName" placeholder="Bobby" name="firstName" required>
 
         <label for="lastName">Last Name: </label>
-        <input type="text" id="lastName" placeholder="Tables" name="lastName" value="<?php print $lName; ?>" required>
+        <input type="text" id="lastName" placeholder="Tables" name="lastName" required>
 
         <label for="email">Email:</label>
-        <input type="email" id="email" placeholder="btables@iupui.edu" name="email" value="<?php print $eMail; ?>" required>
+        <input type="email" id="email" placeholder="btables@iupui.edu" name="email" required>
 
         <label for="phone">Phone Number (Format as: (###)###-####):</label>
-        <input type="text" id="phoneNumber" placeholder="(317)555-5555" name="phoneNumber" value="<?php print $pNumber; ?>" required>
+        <input type="text" id="phone" placeholder="(317)555-5555" name="phone" required>
 
         <button name="enter" class="btn" type="submit">Add User</button>
         <button name="end" class="btn" type="submit">All Users Entered</button>

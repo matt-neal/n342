@@ -30,86 +30,43 @@ include "./head.php";
 <body>
 <?php
 
+$max = 3;
+$attempts = "";
 $msg = "";
+$userPWord = "";
 $pWord = "";
+$userEmail = "";
 $eMail = "";
-$counter = "";
+$counter = 0;
 $disabled = "";
+$userArray = array();
 
-$_SESSION[$counter] = 0;
+$userArray = $_SESSION['userDetails'];
+$userEmail = $userArray[0];
+$userPWord = $userArray[1];
 
-if (isset($_POST['uA'])) {
-    $userArray = ($_GET['uA']);
-}
 
-elseif (isset($_POST['enter'])) {
+if (isset($_POST['enter'])) {
     //ensure no white space
     $eMail = trim($_POST['email']);
     $pWord = trim($_POST['password']);
-    $pWordCheck = false;
-
-    $counter++;
-
-    if ($counter >= 3)
-    {
+    if ($counter < $max) {
+        if ($userPWord != $pWord) {
+            $attempts = ($max - $counter);
+            $msg = "Incorrect Password. $attempts attempts remaining.";
+            $counter++;
+        } elseif ($userEmail != $eMail) {
+            $attempts = ($max - $counter);
+            $msg = "Incorrect Email. $attempts attempts remaining.";
+            $counter++;
+        } else {
+            //direct to another file to process using query strings
+            header("Location:admin.php");
+        }
+    }
+    else {
         $disabled = "disabled";
-        $msg = "Max attempts reached. Please try again later.";
-    }
-
-    //commented out until password validation is checked
-    if (!pwdValidate($pWord)) {
-        $msg = 'Password is not in the required format.';
-
-    } else {
-//                if ($pWord != $passwordConfirmation)
-//                    $msg = "Passwords are not the same.";
-//                    $counter++;
-//                    if ($counter >= 3)
-//                        {
-//                            '<input type="email" disabled>';
-//                            '<input type="password" disabled>';
-//                        }
-//                else $pWordCheck = true;
-    }
-
-    if (!filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
-    } else {
-        //direct to another file to process using query strings
-        header("Location:index.php");
-    };
-}
-
-/*This function will validate if user created a strong password
-* Longer than 10 characters and alphanumeric letters.
-*/
-function pwdValidate($field)
-{
-    $field = trim($field);
-    if (strlen($field) < 10) {
-        return false;
-    } else {
-        //go through each character and find if there is a number or letter
-        $letter = false;
-        $number = false;
-        $chars = str_split($field);
-
-        for ($i = 0; $i < strlen($field); $i++) {
-            if (preg_match("/[A-Za-z]/", $chars[$i])) {
-                $letter = true;
-                break;
-            }
-        }
-
-        for ($i = 0; $i < strlen($field); $i++) {
-            if (preg_match("/[0-9]/", $chars[$i])) {
-                $number = true;
-                break;
-            }
-        }
-
-        if (($letter == true) and ($number == true)) {
-            return true;
-        } else return false;
+        $msg = "Max Attempts Used. Please Try Again Later.";
     }
 }
 ?>
@@ -118,14 +75,14 @@ function pwdValidate($field)
 <!-- Wrapper -->
 <div id="wrapper">
 
-    <form action="admin.php" method="post">
+    <form action="login.php" method="post">
 
         <h1>Log In</h1>
 
         <?php print $msg; ?>
 
         <label for="email">Email:</label>
-        <input type="email" id="email" placeholder="btables@iupui.edu" name="email" required <?php echo $disabled; ?>>
+        <input type="email" id="email" placeholder="btables@iupui.edu" name="email" <?php echo $disabled; ?>>
 
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" <?php echo $disabled; ?>>
