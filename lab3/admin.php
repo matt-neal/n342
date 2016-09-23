@@ -34,8 +34,12 @@ $msg = "";
 $fName = "";
 $lName = "";
 $eMail = "";
-$phoneNumber = "";
+$pNumber = "";
 $userArray = "";
+$firstName = "";
+$lastName = "";
+$email = "";
+$phone = "";
 
 
 if (isset($_POST['enter'])) {
@@ -43,11 +47,11 @@ if (isset($_POST['enter'])) {
     $fName = trim($_POST['firstName']);
     $lName = trim($_POST['lastName']);
     $eMail = trim($_POST['email']);
-    $phone = trim($_POST['phone']);
+    $pNumber = trim($_POST['phone']);
 
 
     //post an array to the log in page
-    $userArray = array($eMail, $pWord);
+    $userArray = array($eMail);
     $userSessionArray = $_SESSION['userDetails'] = $userArray;
 
 }
