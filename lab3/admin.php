@@ -79,85 +79,13 @@ if (isset($_POST['enter'])) {
     if (!filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
         $emailRequired = '<span style="color:red">*</span>';
     }
-    else {
-        if ($userGender == "Male") {
-            $mChecked = "checked";
-            $fChecked = "";
-        }
-        else {
-            $mChecked = "";
-            $fChecked = "checked";
-        };
-
-        if (!pwdValidate($pWord)) {
-            $msg = 'Password is not in the required format of 10 or more characters containing at least one letter and on number.';
-            $pWord = "";
-            $passwordConfirmation = "";
-        }
-        else {
-            if ($pWord != $passwordConfirmation) {
-                $msg = "Please enter matching passwords.";
-            }
-            else $pWordCheck = true;
-            {
-                if ($eMail != $emailConfirmation) {
-                    $msg = "Please enter matching emails.";
-                }
-                elseif ($pWord != $passwordConfirmation) {
-                    $msg = "Please enter matching passwords.";
-                    $pWord = "";
-                    $passwordConfirmation = "";
-                }
-                elseif (($firstNameRequired != "*") or ($lastNameRequired != "*") or ($emailRequired != "*") or ($termsReq != "*")) {
-                    $msg = "Please enter valid data.";
-                }
-                else {
-                    //post an array to the log in page
-                    $userArray = $_SESSION['userDetails'] = $fName, $lName, $eMail, $pNumber;
-                        //direct to another file to process using query strings
-                        header("Location:login.php?uA={$userArray}");
-                    }
-            }
-        }
-    }
-}
-
-/*This function will validate if user created a strong password
-* Longer than 10 characters and alphanumeric letters.
-*/
-function pwdValidate($field) {
-    if (strlen($field) < 10) {
-        return false;
-    }
 
     else {
-        //go through each character and find if there is a number or letter
-        $letter = false;
-        $number = false;
-        $chars = str_split($field);
-
-        for ($i = 0; $i < strlen($field); $i++) {
-            if (preg_match("/[A-Za-z]/", $chars[$i])) {
-                $letter = true;
-                break;
-            }
+        //post an array to the log in page
+        $userArray = array($eMail, $pWord);
+        $userSessionArray = $_SESSION['userDetails'] = $userArray;
         }
-
-        for ($i = 0; $i < strlen($field); $i++) {
-            if (preg_match("/[0-9]/", $chars[$i])) {
-                $number = true;
-                break;
-            }
-        }
-
-        if (($letter == true) and ($number == true)) {
-            return true;
-        }
-
-        else return false;
-    }
 }
-
 ?>
 
 <!-- Wrapper -->
