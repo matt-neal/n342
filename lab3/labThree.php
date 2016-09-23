@@ -112,8 +112,9 @@ if(!isset( $_SESSION)) {
                     }
                     else {
                         //post an array to the log in page
-                        $userArray = [$email, $pWord];
+                        $userArray = array($eMail, $pWord);
                         $userSessionArray = $_SESSION['userDetails'] = $userArray;
+                        header("Location:login.php");
                     }
                 }
             }
