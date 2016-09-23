@@ -4,7 +4,7 @@ CSCI N-342
 Completed 9-16-16
 labThree.php
 
-PLEASE READ BOTH THIS FILE and LOGIN.PHP and ADMIN.PHP
+PLEASE READ THIS FILE and LOGIN.PHP and ADMIN.PHP
 -->
 
 <?php
