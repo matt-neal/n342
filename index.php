@@ -37,7 +37,7 @@ Index.php
                 </a>
                 <a href="./lab3/labThree.php">
                     <img src="images/thumbs/03.jpg" alt="" />
-                    <h3>Lorem ipsum dolor sit amet</h3>
+                    <h3>Lab 3</h3>
                 </a>
             </div>
             <div>
