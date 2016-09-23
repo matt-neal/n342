@@ -24,8 +24,6 @@ if(!isset( $_SESSION)) {
 <html>
 
 <?php
-require_once "../inc/util.php";
-require_once "../mail/mail.class.php";
 include "./head.php";
 ?>
 
@@ -34,23 +32,9 @@ include "./head.php";
 <?php
 $msg = "";
 $fName = "";
-$firstNameRequired = "*";
 $lName = "";
-$lastNameRequired = "*";
-$pWord = "";
-$passwordRequired = "*";
-$passwordConfirmation = "";
 $eMail = "";
-$emailRequired = "*";
-$emailConfirmation = "";
 $phoneNumber = "";
-$pNumber = "";
-$userDept = "";
-$userStatus = "";
-$userGender = "";
-$mChecked = "";
-$fChecked = "";
-$termsReq = "*";
 $userArray = "";
 
 
@@ -59,32 +43,13 @@ if (isset($_POST['enter'])) {
     $fName = trim($_POST['firstName']);
     $lName = trim($_POST['lastName']);
     $eMail = trim($_POST['email']);
-    $emailConfirmation = trim($_POST['emailConfirm']);
-    $pWord = trim($_POST['password']);
-    $passwordConfirmation = trim($_POST['passwordConfirm']);
-    $userGender = trim($_POST['gender']);
-    $userStatus = trim($_POST['status']);
-    $userDept = trim($_POST['department']);
-    $pWordCheck = false;
-
-    if ($fName == "") {
-        $firstNameRequired = '<span style = "color: red">*</span>';
-    };
-
-    if ($lName == "") {
-        $lastNameRequired = '<span style = "color: red">*</span>';
-    };
+    $phone = trim($_POST['phone']);
 
 
-    if (!filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
-        $emailRequired = '<span style="color:red">*</span>';
-    }
+    //post an array to the log in page
+    $userArray = array($eMail, $pWord);
+    $userSessionArray = $_SESSION['userDetails'] = $userArray;
 
-    else {
-        //post an array to the log in page
-        $userArray = array($eMail, $pWord);
-        $userSessionArray = $_SESSION['userDetails'] = $userArray;
-        }
 }
 ?>
 
@@ -94,25 +59,23 @@ if (isset($_POST['enter'])) {
     <form action="admin.php" method="post">
 
         <h1>Please Enter User Information</h1>
-
+        <h3>All Fields Required</h3>
         <?php print $msg; ?>
 
-        <label for="firstName">First Name: <?php print $firstNameRequired; ?></label>
+        <label for="firstName">First Name: </label>
         <input type="text" id="firstName" placeholder="Bobby" name="firstName" value="<?php print $fName; ?>" required>
 
-        <label for="lastName">Last Name: <?php print $lastNameRequired; ?></label>
+        <label for="lastName">Last Name: </label>
         <input type="text" id="lastName" placeholder="Tables" name="lastName" value="<?php print $lName; ?>" required>
 
-        <label for="email">Email: <?php print $emailRequired; ?></label>
+        <label for="email">Email:</label>
         <input type="email" id="email" placeholder="btables@iupui.edu" name="email" value="<?php print $eMail; ?>" required>
 
-        <label for="password">Password: <?php print $passwordRequired; ?></label>
-        <input type="password" id="password" name="password" value="<?php print $pWord; ?>" required>
-
-        <label for="phone">Phone Number (Format as: (###)###-####): <?php print $phoneNumber; ?></label>
+        <label for="phone">Phone Number (Format as: (###)###-####):</label>
         <input type="text" id="phoneNumber" placeholder="(317)555-5555" name="phoneNumber" value="<?php print $pNumber; ?>" required>
 
-        <button name="enter" class="btn" type="submit">Sign Up</button>
+        <button name="enter" class="btn" type="submit">Add User</button>
+        <button name="end" class="btn" type="submit">All Users Entered</button>
     </form>
 
     <!-- Footer -->
