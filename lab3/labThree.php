@@ -2,9 +2,9 @@
 Matthew Neal
 CSCI N-342
 Completed 9-16-16
-labTwo.php
+labThree.php
 
-PLEASE READ BOTH THIS FILE and LOGIN.PHP
+PLEASE READ BOTH THIS FILE and LOGIN.PHP and ADMIN.PHP
 -->
 
 <?php
