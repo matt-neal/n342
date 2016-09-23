@@ -7,6 +7,12 @@ labTwo.php
 PLEASE READ BOTH THIS FILE and LOGIN.PHP
 -->
 
+<?php
+if(!isset( $_SESSION)) {
+    session_start();
+}
+?>
+
 <!DOCTYPE HTML>
 
 <!--
@@ -43,6 +49,9 @@ PLEASE READ BOTH THIS FILE and LOGIN.PHP
     $mChecked = "";
     $fChecked = "";
     $termsReq = "*";
+    $userArray = "";
+    $userSessionArray = "";
+
 
     if (isset($_POST['enter'])) {
         //ensure no white space
@@ -102,23 +111,9 @@ PLEASE READ BOTH THIS FILE and LOGIN.PHP
                         $msg = "Please enter valid data.";
                     }
                     else {
-                        //send the email to the email registered for activating the account
-                        //written by Andy Harris for his PHP/MySql book, modified for this lab to match
-                        //my variables and requirements
-                        $code = randomCodeGenerator(50);
-                        $subject = "Email Activation";
-
-                        $body = '<a href="http://corsair.cs.iupui.edu:20181/lab2/login.php?code=' . $code . '">Your code is ' . $code . '</a>';
-                        $mailer = new Mail();
-                        if (($mailer->sendMail($eMail, $fName, $subject, $body)) == true) {
-                            $msg = "<b>Thank you for registering. A welcome message has been sent to the address you have just registered.</b>";
-                        }
-                        else {
-                            $msg = "Email not sent. ";
-                        }
-
-                        //direct to another file to process using query strings
-                        header("Location:confirmation.php?mG={$msg}&fN={$fName}&lN={$lName}&eM={$eMail}&uG={$userGender}&uD={$userDept}&uS={$userStatus}&pW={$pWord}");
+                        //post an array to the log in page
+                        $userArray = [$email, $pWord];
+                        $userSessionArray = $_SESSION['userDetails'] = $userArray;
                     }
                 }
             }
@@ -166,7 +161,7 @@ function pwdValidate($field) {
 <!-- Wrapper -->
 <div id="wrapper">
 
-    <form action="labTwo.php" method="post">
+    <form action="labThree.php" method="post">
 
         <h1>Register</h1>
 
