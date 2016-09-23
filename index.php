@@ -35,6 +35,10 @@ Index.php
                     <img src="./images/thumbs/01.jpg" alt="" />
                     <h3>Lab 1</h3>
                 </a>
+                <a href="./lab3/labThree.php">
+                    <img src="images/thumbs/03.jpg" alt="" />
+                    <h3>Lorem ipsum dolor sit amet</h3>
+                </a>
             </div>
             <div>
                 <a href="./lab2/labTwo.php">
@@ -43,10 +47,7 @@ Index.php
                 </a>
             </div>
             <!--<div>
-                <a href="images/fulls/03.jpg">
-                    <img src="images/thumbs/03.jpg" alt="" />
-                    <h3>Lorem ipsum dolor sit amet</h3>
-                </a>
+
                 <a href="images/fulls/04.jpg">
                     <img src="images/thumbs/04.jpg" alt="" />
                     <h3>Lorem ipsum dolor sit amet</h3>
