@@ -43,9 +43,15 @@ Index.php
                 </a>
             </div>
             <div>
-                <a href="lab4/lab4.php">
+                <a href="lab3/lab3.php">
                     <img src="images/thumbs/03.jpg" alt="" />
                     <h3>Lab 3</h3>
+                </a>
+            </div>
+            <div>
+                <a href="lab4/lab4.php">
+                    <img src="images/thumbs/04.jpg" alt="" />
+                    <h3>Lab 4</h3>
                 </a>
             </div>
             <!--<div>
