@@ -162,7 +162,7 @@ function pwdValidate($field) {
 <!-- Wrapper -->
 <div id="wrapper">
 
-    <form action="labThree.php" method="post">
+    <form action="lab4.php" method="post">
 
         <h1>Register</h1>
 
@@ -221,7 +221,7 @@ function pwdValidate($field) {
 
 <!-- Footer -->
 <?php
-    include "./footer.php"
+include "./footer.php"
 ?>
 
 </div>

@@ -43,7 +43,7 @@ Index.php
                 </a>
             </div>
             <div>
-                <a href="./lab3/labThree.php">
+                <a href="lab4/lab4.php">
                     <img src="images/thumbs/03.jpg" alt="" />
                     <h3>Lab 3</h3>
                 </a>
