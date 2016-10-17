@@ -1,5 +1,6 @@
 <?php  session_start(); //this must be the very first line on the php page, to register this page to use session variables
 session_destroy();
+$_SESSION['timeout'] = time();
 ?>
 
 <!DOCTYPE HTML>
@@ -18,7 +19,7 @@ include "./head.php";
 
 <title>Logout</title>
     <style type = "text/css">
-        h1, h2 {
+        h1, h2, a {
             text-align: center;
         }
     </style>
@@ -27,6 +28,7 @@ include "./head.php";
 
 <h1>Logout</h1>
 <h1>Thank you for visiting!</h1>
+<a href="login.php">Return to Home</a>
 
 </body>
 </html>

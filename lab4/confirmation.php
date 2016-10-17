@@ -20,33 +20,13 @@ include "./head.php";
 <form>
 
     <?php
-        $hereDoc = "";
+        $code = "";
 
-        $fName = "";
-        $lName = "";
-        $eMail = "";
-        $userGender = "";
-        $userDept = "";
-        $userStatus = "";
-        $pWord = "";
-        $msg = "";
-        $fName = $_GET['fN'];
-        $lName = $_GET['lN'];
-        $eMail = $_GET['eM'];
-        $pWord = $_GET['pW'];
-        $userGender = $_GET['uG'];
-        $userDept = $_GET['uD'];
-        $userStatus = $_GET['uS'];
-        $msg = $_GET['mG'];
-        
-    //retrieve all the information from the user from the database
-    //always check if the session variable exists before using it for the first time on this page.
-    if (isset($_SESSION['email']))
-        $sql = "select * from REGISTRATION where username = '".$_SESSION['email']."'";
-    else Header ("Location:login.php") ;
+    if (isset($_GET['code'])) {
+        $sql = "insert into USER values(null, null, null, '1')";
+    }
+    else Header ("Location:registration.php") ;
 
-    $result = mysql_query($sql, $conn) or die(mysql_error()); //send the query to the database or quit if cannot connect
-    $fields = mysql_fetch_assoc($result);
 ?>
 </form>
 

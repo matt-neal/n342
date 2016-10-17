@@ -8,6 +8,7 @@ PLEASE READ THIS FILE and LOGIN.PHP and labThree.php
 -->
 
 <?php session_start();
+$_SESSION['timeout'] = time();
     if (isset($_SESSION['email'])){
         $sql = "select * from REGISTRATION where username = '".$_SESSION['email']."'";}
     else {

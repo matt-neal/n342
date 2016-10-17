@@ -7,14 +7,10 @@ labThree.php
 PLEASE READ THIS FILE and LOGIN.PHP and ADMIN.PHP
 -->
 
-<?php session_start(); //this must be the very first line on the php page, to register this page to use session variables
-$_SESSION['timeout'] = time();
-
-//if this is a page that requires login always perform this session verification
-require_once "../inc/sessionVerify.php";
-
-require_once "../inc/dbconnect.php";
-
+<?php
+if(!isset( $_SESSION)) {
+    session_start();
+}
 ?>
 
 <!DOCTYPE HTML>
@@ -92,7 +88,7 @@ require_once "../inc/dbconnect.php";
                 $fChecked = "checked";
             };
 
-            if (!pWordValidate($pWord)) {
+            if (!pwdValidate($pWord)) {
                 $msg = 'Password is not in the required format of 10 or more characters containing at least one letter and on number.';
                 $pWord = "";
                 $passwordConfirmation = "";
@@ -115,49 +111,9 @@ require_once "../inc/dbconnect.php";
                         $msg = "Please enter valid data.";
                     }
                     else {
-                        /*************************************************************
-                         * Enter data into the database here
-                         *************************************************************/
-                        //first escape all the strings so that backslashes are added before the following characters: \x00, \n, \r, \, ', " and \x1a.
-                        //This is used to prevent sql injections.
-                        $eMail = mysqli_real_escape_string($con, $eMail);
-                        $pWord = mysqli_real_escape_string($con, $pWord);
-                        $fName = mysqli_real_escape_string($con, $fName);
-                        $lName = mysqli_real_escape_string($con, $lName);
-
-                        $_SESSION['email'] = $eMail;
-
-                        //first check if the username already exists in the database
-                        $sql = "select count(*) as c from userinfo where username = '" . $eMail. "'";
-
-                        $result = mysqli_query($con, $sql) or die("Error in the consult.." . mysqli_error($con)); //send the query to the database or quit if cannot connect
-                        $count = 0;
-                        $field = mysqli_fetch_object($result); //the query results are objects, in this case, one object
-                        $count = $field->c;
-                        if ($count != 0)
-                        {	Header ("Location:login.php?l=r");}
-                        else //the username doesn't exist yet
-                        {	$sql = "insert into userInfo values(null, '".$fName."', '".$lName."', '".$gender."', '".$userDept."', '".$userStatus."')";
-                            $sql = "insert into user values ('".$eMail."', '".$pWord."')";
-                            $result= mysqli_query($con, $sql) or die(mysqli_error($con)); //a non-select statement query will return a result indicating if the query is successful						//Commonly used functions are: Sys::getDB()->Execute, Sys::getDB()->GetOne(), Sys::getDB()->GetRows(),  Sys::getDB()->GetRow(), see details in adodb.inc.php
-                            //send the email to the email registered for activating the account
-                            //written by Andy Harris for his PHP/MySql book, modified for this lab to match
-                            //my variables and requirements
-                            $code = randomCodeGenerator(50);
-                            $subject = "Email Activation";
-                            $body = 'Thank you for registering at Precision Setups! We hope our website gives you the greatest experience.'.'<a href="http://corsair.cs.iupui.edu:20181/lab4/confirmation.php?code=' . $code . '">Your code is ' . $code . '</a>';
-                            $mailer = new Mail();
-                            if (($mailer->sendMail($eMail, $fName, $subject, $body)) == true) {
-                                $msg = "<b>Thank you for registering. A welcome message has been sent to the address you have just registered.</b>";
-                            }
-                            else {
-                                $msg = "Email not sent. ";
-                            }
-                            if ($result) $msg = "<b>Your information is entered into the database. </b>";
-                            //Insert auth code into database
-                            $sql = "insert into USER values(null, null, '".$code."')";
-                        }
-
+                        //post an array to the log in page
+                        $userArray = array($eMail, $pWord);
+                        $userSessionArray = $_SESSION['userDetails'] = $userArray;
                         header("Location:login.php");
                     }
                 }
@@ -168,7 +124,7 @@ require_once "../inc/dbconnect.php";
 /*This function will validate if user created a strong password
 * Longer than 10 characters and alphanumeric letters.
 */
-function pWordValidate($field) {
+function pwdValidate($field) {
     if (strlen($field) < 10) {
         return false;
     }
@@ -206,7 +162,7 @@ function pWordValidate($field) {
 <!-- Wrapper -->
 <div id="wrapper">
 
-    <form action="lab4.php" method="post">
+    <form action="labThree.php" method="post">
 
         <h1>Register</h1>
 
@@ -224,7 +180,7 @@ function pWordValidate($field) {
             <label for="emailConfirm">Confirm Email:</label>
             <input type="email" id="emailConfirm" name="emailConfirm" placeholder="Please Confirm Email" value="<?php print $emailConfirmation; ?>" required>
 
-            <label for="password">Password: Must contain 10-18 characters, with at least 1 letter and 1 number. <?php print $passwordRequired; ?></label>
+            <label for="password">Password: Must contain 10 characters, with at least 1 letter and 1 number. <?php print $passwordRequired; ?></label>
             <input type="password" id="password" name="password" value="<?php print $pWord; ?>" required>
 
             <label for="password">Confirm Password:</label>
@@ -265,7 +221,7 @@ function pWordValidate($field) {
 
 <!-- Footer -->
 <?php
-include "./footer.php"
+    include "./footer.php"
 ?>
 
 </div>
