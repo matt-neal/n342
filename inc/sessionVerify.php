@@ -10,5 +10,4 @@ else
         Header ("Location:logout.php") ;
     else 	$_SESSION['timeout'] = time();
 
-
 ?>

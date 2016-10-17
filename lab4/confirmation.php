@@ -1,7 +1,7 @@
 <!--
 Matthew Neal
 CSCI N-342
-Completed 9-9-16
+Completed 10-16-16
 confirmation.php
 -->
 
@@ -38,21 +38,16 @@ include "./head.php";
         $userDept = $_GET['uD'];
         $userStatus = $_GET['uS'];
         $msg = $_GET['mG'];
-
-    $hereDoc = <<<HERE
         
-    <h1>User Registration Confirmation</h1>
-    <h3>$msg</h3>
-    <label>Name: $fName $lName</label> 
-    <label>Email: $eMail</label> 
-    <label>Password: $pWord</label>  
-    <label>Gender: $userGender</label>  
-    <label>Department Status: $userDept $userStatus</label>   
-HERE;
+    //retrieve all the information from the user from the database
+    //always check if the session variable exists before using it for the first time on this page.
+    if (isset($_SESSION['email']))
+        $sql = "select * from REGISTRATION where username = '".$_SESSION['email']."'";
+    else Header ("Location:logout.php") ;
 
-    print $hereDoc;
-
-    ?>
+    $result = mysql_query($sql, $conn) or die(mysql_error()); //send the query to the database or quit if cannot connect
+    $fields = mysql_fetch_assoc($result);
+?>
 </form>
 
 </html>

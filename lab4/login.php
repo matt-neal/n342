@@ -1,7 +1,7 @@
 <!--
 Matthew Neal
 CSCI N-342
-Completed 9-16-16
+Completed 10-16-16
 login.php
 
 PLEASE READ THIS FILE and labThree.PHP and ADMIN.PHP
@@ -39,29 +39,39 @@ $userEmail = "";
 $eMail = "";
 $counter = 0;
 $disabled = "";
-$userArray = array();
-
-$userArray = $_SESSION['userDetails'];
-$userEmail = $userArray[0];
-$userPWord = $userArray[1];
-
 
 if (isset($_POST['enter'])) {
+
     //ensure no white space
     $eMail = trim($_POST['email']);
     $pWord = trim($_POST['password']);
-    if ($counter < $max) {
+    $email = mysqli_real_escape_string($con, $email);
+    $pWord = mysqli_real_escape_string($con, $pWord);
+
+    if ($counter < $max && (spamcheck($email)))
+    {
         if ($userPWord != $pWord) {
             $attempts = ($max - $counter);
             $msg = "Incorrect Password. $attempts attempts remaining.";
-            $counter++;
+            $_SESSION['counter'] = $counter++;
         } elseif ($userEmail != $eMail) {
             $attempts = ($max - $counter);
             $msg = "Incorrect Email. $attempts attempts remaining.";
-            $counter++;
+            $_SESSION['counter'] = $counter++;
         } else {
-            //direct to another file to process using query strings
-            header("Location:admin.php");
+            $_SESSION['email'] = $email;
+
+            $sql = "select count(*) as c from user where email = '" . $email. "' and password = '".$pwd. "' and auth = '1'";
+            $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
+            $field = mysqli_fetch_object($result); //the query results are objects, in this case, one object
+            $count = $field->c;
+
+            if ($sql = "select count(*) as c from user where auth = '1'"){
+                $msg = "Account not authorized. Please check your email for authorization link before logging in.";
+            }
+            elseif ($count > 0)
+                Header ("Location:user.php") ;
+            else $msg = "The information entered does not match with the records in our database.";
         }
     }
     else {
