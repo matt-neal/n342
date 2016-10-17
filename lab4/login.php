@@ -74,6 +74,10 @@ if (isset($_POST['enter'])) {
             else $msg = "The information entered does not match with the records in our database.";
         }
     }
+    elseif (isset($_GET['l'])) {
+        $tag = $_GET['l'];
+        if ($tag == 'r') $msg = "You have already registered with this email. Click on Forget Password to retrieve your password.";
+    }
     else {
         $disabled = "disabled";
         $msg = "Max Attempts Used. Please Try Again Later.";

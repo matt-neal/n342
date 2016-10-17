@@ -184,7 +184,7 @@ function pwdValidate($field) {
             <label for="emailConfirm">Confirm Email:</label>
             <input type="email" id="emailConfirm" name="emailConfirm" placeholder="Please Confirm Email" value="<?php print $emailConfirmation; ?>" required>
 
-            <label for="password">Password: Must contain 10 characters, with at least 1 letter and 1 number. <?php print $passwordRequired; ?></label>
+            <label for="password">Password: Must contain 10-18 characters, with at least 1 letter and 1 number. <?php print $passwordRequired; ?></label>
             <input type="password" id="password" name="password" value="<?php print $pWord; ?>" required>
 
             <label for="password">Confirm Password:</label>

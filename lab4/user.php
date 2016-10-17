@@ -63,26 +63,24 @@ if (isset($_POST['enter'])) {
 <!-- Wrapper -->
 <div id="wrapper">
 
-    <form action="admin.php" method="post">
+    <form action="user.php" method="post">
 
-        <h1>Please Enter User Information</h1>
+        <h1>Change Password</h1>
         <h3>All Fields Required</h3>
-
-        <label for="firstName">First Name: </label>
-        <input type="text" id="firstName" placeholder="Bobby" name="firstName" required>
-
-        <label for="lastName">Last Name: </label>
-        <input type="text" id="lastName" placeholder="Tables" name="lastName" required>
 
         <label for="email">Email:</label>
         <input type="email" id="email" placeholder="btables@iupui.edu" name="email" required>
 
-        <label for="phone">Phone Number (Format as: (###)###-####):</label>
-        <input type="text" id="phone" placeholder="(317)555-5555" name="phone" required>
+        <label for="password">Password: Must contain 10-18 characters, with at least 1 letter and 1 number.</label>
+        <input type="password" id="password" name="password" required>
 
-        <button name="enter" class="btn" type="submit">Add User</button>
-        <button name="end" class="btn" type="submit">All Users Entered</button>
+        <label for="newPassword">Password: Must contain 10-18 characters, with at least 1 letter and 1 number.</label>
+        <input type="password" id="newPassword" name="newPassword" required>
+
+        <button name="enter" class="btn" type="submit">Change Password</button>
     </form>
+
+    <button name="end" class="btn" type="submit">Log Out</button>
 
     <!-- Footer -->
     <?php
