@@ -31,54 +31,27 @@ include "./head.php";
 <body>
 
 <?php
-$msg = "";
-$fName = "";
-$lName = "";
-$eMail = "";
-$pNumber = "";
-$userArray = "";
-$firstName = "";
-$lastName = "";
-$email = "";
-$phone = "";
-$userDetails = "";
+$fN = "";
+$lN = "";
+$fN = "select FirstName from userInfo where email = '".$_SESSION['email']."'";
+$lN = "select LastName from userInfo where email = '".$_SESSION['email']."'";
+$result = mysqli_query($con, $sql) or die(mysqli_error($con));
 
+if (isset($_POST['cP'])){
+    Header ("location:changePassword.php");
+}
 
-if (isset($_POST['enter'])) {
-    //ensure no white space
-    $fName = trim($_POST['firstName']);
-    $lName = trim($_POST['lastName']);
-    $eMail = trim($_POST['email']);
-    $pNumber = trim($_POST['phone']);
-
-
-    //post an array to the log in page
-    $userArray = array($fName,$lName,$eMail,$pNumber);
-    $_SESSION['userDetails'] = $userArray;
-    $msg = $_SESSION['userDetails'];
-    print_r($msg);
+if (isset($_POST['end'])){
+    session_destroy();
+    Header ("location:login.php");
 }
 ?>
 
 <!-- Wrapper -->
 <div id="wrapper">
+    <h1>Greetings <?php print $fN. $lN?></h1>
 
-    <form action="user.php" method="post">
-
-        <h1>Change Password</h1>
-        <h3>All Fields Required</h3>
-
-        <label for="email">Email:</label>
-        <input type="email" id="email" placeholder="btables@iupui.edu" name="email" required>
-
-        <label for="password">Password: Must contain 10-18 characters, with at least 1 letter and 1 number.</label>
-        <input type="password" id="password" name="password" required>
-
-        <label for="newPassword">Password: Must contain 10-18 characters, with at least 1 letter and 1 number.</label>
-        <input type="password" id="newPassword" name="newPassword" required>
-
-        <button name="enter" class="btn" type="submit">Change Password</button>
-    </form>
+    <button name="cP" class="btn" type="submit">Change Password</button>
 
     <button name="end" class="btn" type="submit">Log Out</button>
 
