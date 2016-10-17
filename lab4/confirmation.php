@@ -43,7 +43,7 @@ include "./head.php";
     //always check if the session variable exists before using it for the first time on this page.
     if (isset($_SESSION['email']))
         $sql = "select * from REGISTRATION where username = '".$_SESSION['email']."'";
-    else Header ("Location:logout.php") ;
+    else Header ("Location:login.php") ;
 
     $result = mysql_query($sql, $conn) or die(mysql_error()); //send the query to the database or quit if cannot connect
     $fields = mysql_fetch_assoc($result);

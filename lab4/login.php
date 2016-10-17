@@ -70,7 +70,7 @@ if (isset($_POST['enter'])) {
                 $msg = "Account not authorized. Please check your email for authorization link before logging in.";
             }
             elseif ($count > 0)
-                Header ("Location:user.php") ;
+                Header ("Location:uer.php") ;
             else $msg = "The information entered does not match with the records in our database.";
         }
     }
