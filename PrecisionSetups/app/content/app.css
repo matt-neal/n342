@@ -1,0 +1,95 @@
+body {
+    font-family: "Century Gothic", sans-serif;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#main-wrapper {
+    min-height: 100%;
+    padding: 0 0 100px;
+    position: relative;
+}
+
+.hero {
+    background: url(header.jpg) center no-repeat;
+    padding: 4em;
+}
+
+.footer {
+    background-color: #292c2f;
+    text-align: center;
+    font-size: 1rem;
+    padding: 2rem;
+    bottom: 0;
+    height: auto;
+    left: 0;
+    position: absolute;
+    width: 100%;
+}
+
+.footer p.slogan {
+    color: #8d9093;
+    font-size: 1.2rem;
+    margin: 0 0 .5rem;
+}
+
+.footer p.copywrite {
+    color: #8f9296;
+    font-size: 0.875rem;
+    margin: 0;
+}
+
+.footer .links a {
+    list-style: none;
+    font-weight: bold;
+    color: #ffffff;
+    margin: 0;
+}
+
+.footer .links a::after {
+    cursor: default;
+    content: "•";
+    padding: 0 0.4rem 0 0.8rem;
+}
+
+.footer .links a:last-child::after {
+    cursor: default;
+    content: "";
+    padding: 0 0.4rem 0 0.8rem;
+}
+
+nav .button {
+    border: 0;
+    background: #292c2f;
+    -webkit-box-shadow: 0;
+    -moz-box-shadow: 0;
+    box-shadow: 0;
+    font-size: 1em;
+    color: rgba(255, 255, 255, 0.8);
+    padding-top: 25px;
+    padding-bottom: 25px;
+    -webkit-box-shadow: 0px 4px 0px #8d9093;
+    -moz-box-shadow: 0px 4px 0px #8d9093;
+    box-shadow: 0px 4px 0px #8d9093;
+}
+nav .button:hover {
+    background: #282828;
+    color: white;
+}
+nav .button:active {
+    -webkit-box-shadow: 0px 4px 0px #8d9093;
+    -moz-box-shadow: 0px 4px 0px #8d9093;
+    box-shadow: 0px 4px 0px #8d9093;
+    background: #292c2f;
+}
+
+.button {
+    background: #292c2f;
+}
+
+a {
+    color: #292c2f;
+}
