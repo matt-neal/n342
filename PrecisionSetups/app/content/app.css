@@ -14,7 +14,7 @@ body {
 }
 
 .hero {
-    background: url(header.jpg) center no-repeat;
+    background: url(header.svg) center no-repeat;
     padding: 4em;
 }
 
