@@ -10,17 +10,12 @@ registration.php
 
 <!DOCTYPE HTML>
 
-<!--
-	Visualize by TEMPLATED
-	templated.co @templatedco
-	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
--->
-
 <html>
 
 <?php
-require_once "../inc/util.php";
+require_once "./util.php";
 require_once "../mail/mail.class.php";
+require_once "./dbconnect.php";
 include "./head.php";
 ?>
 
@@ -39,14 +34,10 @@ $passwordConfirmation = "";
 $eMail = "";
 $emailRequired = "*";
 $emailConfirmation = "";
-$userDept = "";
-$userStatus = "";
-$userGender = "";
-$mChecked = "";
-$fChecked = "";
+$homePhone = "";
+$cellPhone = "";
 $termsReq = "*";
-$userArray = "";
-$userSessionArray = "";
+
 
 
 if (isset($_POST['enter'])) {
@@ -57,9 +48,8 @@ if (isset($_POST['enter'])) {
     $emailConfirmation = trim($_POST['emailConfirm']);
     $pWord = trim($_POST['password']);
     $passwordConfirmation = trim($_POST['passwordConfirm']);
-    $userGender = trim($_POST['gender']);
-    $userStatus = trim($_POST['status']);
-    $userDept = trim($_POST['department']);
+    $homePhone = trim($_POST['homePhone']);
+    $cellPhone = trim($_POST['cellPhone']);
     $pWordCheck = false;
 
     if ($fName == "") {
@@ -74,16 +64,6 @@ if (isset($_POST['enter'])) {
     if (!filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
         $emailRequired = '<span style="color:red">*</span>';
     }
-    else {
-        if ($userGender == "Male") {
-            $mChecked = "checked";
-            $fChecked = "";
-        }
-        else {
-            $mChecked = "";
-            $fChecked = "checked";
-        };
-
         if (!pWordValidate($pWord)) {
             $msg = 'Password is not in the required format of 10 or more characters containing at least one letter and on number.';
             $pWord = "";
@@ -120,7 +100,7 @@ if (isset($_POST['enter'])) {
                     $_SESSION['email'] = $eMail;
 
                     //first check if the username already exists in the database
-                    $sql = "select count(*) as c from userinfo where username = '" . $eMail. "'";
+                    $sql = "select count(*) as c from Customer_FP where Email = '" . $eMail. "'";
 
                     $result = mysqli_query(null, $sql) or die("Error in the consult.." . mysqli_error($con)); //send the query to the database or quit if cannot connect
                     $count = 0;
@@ -129,8 +109,7 @@ if (isset($_POST['enter'])) {
                     if ($count != 0)
                     {	Header ("Location:login.php?l=r");}
                     else //the username doesn't exist yet
-                    {	$sql = "insert into userInfo values(null, '".$fName."', '".$lName."', '".$gender."', '".$userDept."', '".$userStatus."')";
-                        $sql = "insert into user values ('".$eMail."', '".$pWord."')";
+                    {	$sql = "insert into Customer_FP values(null, '".$fName."', '".$lName."', '".$eMail."', '".$pWord."', '".$homePhone."', '".$cellPhone."')";
                         $result= mysqli_query($con, $sql) or die(mysqli_error($con)); //a non-select statement query will return a result indicating if the query is successful						//Commonly used functions are: Sys::getDB()->Execute, Sys::getDB()->GetOne(), Sys::getDB()->GetRows(),  Sys::getDB()->GetRow(), see details in adodb.inc.php
                         //send the email to the email registered for activating the account
                         //written by Andy Harris for his PHP/MySql book, modified for this lab to match
@@ -154,43 +133,6 @@ if (isset($_POST['enter'])) {
                 }
             }
         }
-    }
-}
-
-/*This function will validate if user created a strong password
-* Longer than 10 characters and alphanumeric letters.
-*/
-function pWordValidate($field) {
-    if (strlen($field) < 10) {
-        return false;
-    }
-
-    else {
-        //go through each character and find if there is a number or letter
-        $letter = false;
-        $number = false;
-        $chars = str_split($field);
-
-        for ($i = 0; $i < strlen($field); $i++) {
-            if (preg_match("/[A-Za-z]/", $chars[$i])) {
-                $letter = true;
-                break;
-            }
-        }
-
-        for ($i = 0; $i < strlen($field); $i++) {
-            if (preg_match("/[0-9]/", $chars[$i])) {
-                $number = true;
-                break;
-            }
-        }
-
-        if (($letter == true) and ($number == true)) {
-            return true;
-        }
-
-        else return false;
-    }
 }
 
 ?>
@@ -198,9 +140,7 @@ function pWordValidate($field) {
 <!-- Wrapper -->
 <div id="wrapper">
 
-    <form action="lab4.php" method="post">
-
-        <h1>Register</h1>
+    <form action="registration.php" method="post">
 
         <?php print $msg; ?>
 
@@ -222,32 +162,11 @@ function pWordValidate($field) {
         <label for="password">Confirm Password:</label>
         <input type="password" id="passwordConfirm" placeholder="Please Confirm Password" name="passwordConfirm" value="<?php print $passwordConfirmation; ?>" required>
 
-        <label>Gender:</label>
-        <input type="radio" id="Male" value="Male" name="gender" <?php print $maleChecked; ?> checked><label for="Male" class="light">Male</label><br>
-        <input type="radio" id="Female" value="Female" name="gender" <?php print $femaleChecked; ?>><label for="Female" class="light">Female</label>
+        <label for="homePhone">Home Phone: (Format: 555-555-5555)</label>
+        <input type="text" id="homePhone" placeholder="Please Enter Home Phone #" name="homePhone" value="<?php print $homePhone; ?>" required>
 
-        <label for="department">Department:</label>
-        <select id="department" name="department">
-            <optgroup label="School of Science">
-                <option value="Computer Science" selected>Computer Science</option>
-                <option value="Computer Engineering">Computer Engineering</option>
-                <option value="Software Engineering">Software Engineering</option>
-                <option value="Information Technology">Information Technology</option>
-            </optgroup>
-            <optgroup label="University College">
-                <option value="Liberal Arts">Liberal Arts</option>
-                <option value="Something Else">Something Else</option>
-            </optgroup>
-            <optgroup label="Other">
-                <option value="Secretary">Secretary</option>
-                <option value="Maintenance">Maintenance</option>
-            </optgroup>
-        </select>
-
-        <label>Status:</label>
-        <input type="checkbox" id="student" value="Student" name="status"><label class="light" for="student">Student</label><br>
-        <input type="checkbox" id="faculty" value="Faculty" name="status"><label class="light" for="faculty">Faculty</label><br>
-        <input type="checkbox" id="staff" value="Staff" name="status"><label class="light" for="staff">Staff</label>
+        <label for="cellPhone">Cell Phone: (Format: 555-555-5555)</label>
+        <input type="text" id="cellPhone" placeholder="Please Enter Cell Phone #" name="cellPhone" value="<?php print $cellPhone; ?>" required>
 
         <label>Terms and Conditions: <?php print $termsReq; ?></label>
         <input type="checkbox" id="terms" value="terms" name="terms" required><label class="light" for="terms">I Agree to the Terms and Conditions:</label>
