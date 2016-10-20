@@ -1,3 +1,11 @@
+#wrapper {
+    font-family: "Century Gothic", sans-serif;
+}
+
+[type=button], [type=submit] {
+    border-radius: 6px;
+}
+
 *, *:before, *:after {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -7,6 +15,7 @@
 h1 {
     text-align: center;
     font-weight: bolder;
+    color: whitesmoke;
 }
 
 h3 {
@@ -19,6 +28,7 @@ form {
     padding: 8px 18px;
     background: black;
     border-radius: 6px;
+    color: whitesmoke;
 }
 
 input[type="text"],
@@ -42,7 +52,6 @@ select {
     padding: 6px;
     width: 100%;
     background-color: dimgrey;
-    color: whitesmoke;
     box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
     margin-bottom: 30px;
 }
@@ -60,17 +69,16 @@ select {
 
 button {
     color: #FFF;
-    background-color: deepskyblue;
+    background-color: #292c2f;
     font-size: 18px;
     text-align: center;
     font-style: normal;
-    border-radius: 5px;
-    width: 100%;
+    border-radius: 6px;
+    width: 50%;
     border: 1px solid white;
-    border-width: 1px 1px 1px;
     box-shadow: 0 -1px 0 rgba(255,255,255,0.1) inset;
-    padding: 0em;
-    margin-bottom: 0.6em;
+    padding: 0.7em 0px 0.7em 0;
+    margin: 0em 0em 1em 6em;
 }
 
 fieldset {
@@ -86,6 +94,7 @@ legend {
 label {
     display: block;
     margin-bottom: 15px;
+    color: whitesmoke;
 }
 
 label.light {
@@ -94,7 +103,7 @@ label.light {
 }
 
 .number {
-    background-color: deepskyblue;
+    background-color: #292c2f;
     color: #fff;
     height: 30px;
     width: 30px;

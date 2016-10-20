@@ -4,7 +4,9 @@ CSCI N-342
 Completed 10-16-16
 confirmation.php
 -->
-
+<?php session_start();
+require_once "../inc/dbconnect.php";
+?>
 <!DOCTYPE HTML>
 <!--
 	Visualize by TEMPLATED

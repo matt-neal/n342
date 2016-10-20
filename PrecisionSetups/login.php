@@ -92,15 +92,13 @@ include "./head.php"
 
         <form action="login.php" method="post">
 
-            <h1>Log In</h1>
-
-            <?php print $msg; ?>
+           <?php print $msg; ?>
 
             <label for="email">Email:</label>
-            <input type="email" id="email" placeholder="btables@iupui.edu" name="email" <?php echo $disabled; ?>>
+            <input type="email" id="email" placeholder="btables@iupui.edu" name="email" required <?php echo $disabled; ?>>
 
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password" <?php echo $disabled; ?>>
+            <input type="password" id="password" name="password" required <?php echo $disabled; ?>>
 
             <button name="enter" class="btn" type="submit">Log In</button>
         </form>

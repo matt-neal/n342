@@ -2,19 +2,12 @@
 Matthew Neal
 CSCI N-342
 Completed 9-16-16
-labThree.php
+lab4.php
 
 PLEASE READ THIS FILE and LOGIN.PHP and ADMIN.PHP
 -->
 
 <?php session_start(); //this must be the very first line on the php page, to register this page to use session variables
-$_SESSION['timeout'] = time();
-
-//if this is a page that requires login always perform this session verification
-require_once "../inc/sessionVerify.php";
-
-require_once "../inc/dbconnect.php";
-
 ?>
 
 <!DOCTYPE HTML>
@@ -36,6 +29,7 @@ require_once "../inc/dbconnect.php";
 <body>
 
 <?php
+    $con = NULL;
     $msg = "";
     $fName = "";
     $firstNameRequired = "*";
@@ -120,17 +114,17 @@ require_once "../inc/dbconnect.php";
                          *************************************************************/
                         //first escape all the strings so that backslashes are added before the following characters: \x00, \n, \r, \, ', " and \x1a.
                         //This is used to prevent sql injections.
-                        $eMail = mysqli_real_escape_string($con, $eMail);
-                        $pWord = mysqli_real_escape_string($con, $pWord);
-                        $fName = mysqli_real_escape_string($con, $fName);
-                        $lName = mysqli_real_escape_string($con, $lName);
+                        $eMail = mysqli_real_escape_string(null, $eMail);
+                        $pWord = mysqli_real_escape_string(null, $pWord);
+                        $fName = mysqli_real_escape_string(null, $fName);
+                        $lName = mysqli_real_escape_string(null, $lName);
 
                         $_SESSION['email'] = $eMail;
 
                         //first check if the username already exists in the database
                         $sql = "select count(*) as c from userinfo where username = '" . $eMail. "'";
 
-                        $result = mysqli_query($con, $sql) or die("Error in the consult.." . mysqli_error($con)); //send the query to the database or quit if cannot connect
+                        $result = mysqli_query(null, $sql) or die("Error in the consult.." . mysqli_error($con)); //send the query to the database or quit if cannot connect
                         $count = 0;
                         $field = mysqli_fetch_object($result); //the query results are objects, in this case, one object
                         $count = $field->c;
