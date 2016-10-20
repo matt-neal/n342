@@ -10,6 +10,9 @@
 <body>
 <div id="main-wrapper">
     <header class="hero">
+        <?php
+        include "./svgHeader.php"
+        ?>
     </header>
 
     <nav class="row">
