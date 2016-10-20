@@ -13,8 +13,10 @@ body {
     position: relative;
 }
 
-.hero {
-    background: url(header.svg) center no-repeat;
+svg {
+    width: 100%;
+    margin-top: -110px;
+    margin-bottom: -150px;
 }
 
 .footer {
@@ -63,25 +65,18 @@ body {
 nav .button {
     border: 0;
     background: #292c2f;
-    -webkit-box-shadow: 0;
-    -moz-box-shadow: 0;
-    box-shadow: 0;
     font-size: 1em;
     color: rgba(255, 255, 255, 0.8);
     padding-top: 25px;
     padding-bottom: 25px;
-    -webkit-box-shadow: 0px 4px 0px #8d9093;
-    -moz-box-shadow: 0px 4px 0px #8d9093;
-    box-shadow: 0px 4px 0px #8d9093;
 }
+
 nav .button:hover {
     background: #282828;
     color: white;
 }
+
 nav .button:active {
-    -webkit-box-shadow: 0px 4px 0px #8d9093;
-    -moz-box-shadow: 0px 4px 0px #8d9093;
-    box-shadow: 0px 4px 0px #8d9093;
     background: #292c2f;
 }
 
@@ -91,4 +86,38 @@ nav .button:active {
 
 a {
     color: #292c2f;
+}
+
+.nav {
+    margin:10%;
+}
+.nav a {
+    padding: 11px 26px;
+    outline: none;
+    border: 3px solid #121212;
+    color: #777777;
+    vertical-align: top;
+    text-decoration: none;
+    text-shadow: 0 -1px #0F0F0F;
+    cursor: pointer;
+    transition: all .6s ease;
+}
+.nav a:hover {
+    color:#f6f6f6;
+}
+.nav a:first-child {
+    border-radius: 6px 0 0 6px;
+}
+.nav a:last-child {
+    border-radius: 0 6px 6px 0;
+}
+.nav a:active {
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.4) inset, 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+.nav a.highlight {
+    color: #f6f6f6;
+}
+
+.nav a:last-child {
+    border-right: 1px solid #121212;
 }
