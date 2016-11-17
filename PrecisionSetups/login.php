@@ -88,7 +88,7 @@ include "./head.php"
     ?>
 
     <!-- Wrapper -->
-    <div id="wrapper">
+    <div id="wrapper" name="login">
 
         <form action="login.php" method="post">
 
@@ -102,11 +102,6 @@ include "./head.php"
 
             <button name="enter" class="btn" type="submit">Log In</button>
         </form>
-
-        <!-- Footer -->
-        <?php
-        include "./footer.php"
-        ?>
 
     </div>
 

@@ -1,7 +1,5 @@
 body {
     font-family: "Century Gothic", sans-serif;
-    overflow-x: hidden;
-    overflow-y: hidden;
     height: 100%;
     margin: 0;
     padding: 0;
@@ -88,12 +86,13 @@ a {
 }
 
 .nav {
+    display: inline-block;
     position: absolute;
-    margin: 15%;
-    top: 0;
+    margin: auto;
+    top: 10.4em;
     right: 0;
-    bottom: 0;
-    left: 0;
+    left: 25px;
+    width: 595px;
 }
 .nav a {
     padding: 11px 26px;
