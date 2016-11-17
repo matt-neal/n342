@@ -17,6 +17,7 @@ require_once "./util.php";
 require_once "../mail/mail.class.php";
 require_once "./dbconnect.php";
 include "./head.php";
+include "./header.php";
 ?>
 
 <body>
@@ -174,10 +175,7 @@ if (isset($_POST['enter'])) {
         <button name="enter" class="btn" type="submit">Sign Up</button>
     </form>
 
-    <!-- Footer -->
-    <?php
-    include "./footer.php"
-    ?>
+
 
 </div>
 
@@ -186,4 +184,8 @@ if (isset($_POST['enter'])) {
 <!--<script src="assets/js/main.js"></script> -->
 
 </body>
+<!-- Footer -->
+<?php
+include "./footer.php"
+?>
 </html>

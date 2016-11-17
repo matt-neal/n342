@@ -29,6 +29,8 @@ form {
     background: black;
     border-radius: 6px;
     color: whitesmoke;
+    margin-bottom: -28em;
+    margin-top: -4em;
 }
 
 input[type="text"],
