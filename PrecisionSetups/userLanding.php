@@ -8,7 +8,6 @@ include "./head.php"
     <?php
     include "./header.php"
     ?>
-
     <!-- Wrapper -->
     <div id="userPage">
         <form>

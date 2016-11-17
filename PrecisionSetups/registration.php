@@ -175,8 +175,6 @@ if (isset($_POST['enter'])) {
         <button name="enter" class="btn" type="submit">Sign Up</button>
     </form>
 
-
-
 </div>
 
 <!-- Scripts -->
