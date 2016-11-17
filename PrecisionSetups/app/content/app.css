@@ -88,7 +88,12 @@ a {
 }
 
 .nav {
-    margin:10%;
+    position: absolute;
+    margin: 15%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
 }
 .nav a {
     padding: 11px 26px;
@@ -140,6 +145,15 @@ Licensed under MIT
 .profile-sidebar {
     padding: 20px 0 10px 0;
     background: #fff;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
+    border: 0;
 }
 
 .profile-userpic img {
