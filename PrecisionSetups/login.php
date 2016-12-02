@@ -53,39 +53,41 @@ include "./head.php"
 
         if ($counter < $max && (spamcheck($eMail)))
         {
-            if ($userPWord != $pWord) {
-                $attempts = ($max - $counter);
-                $msg = "Incorrect Password. $attempts attempts remaining.";
+            $_SESSION['email'] = $email;
+
+            $sql = "SELECT COUNT(*) AS c FROM Customer_FP WHERE Email = '".$email."' AND Password = '".$pWord."' AND authVer = '1'";
+            $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
+            $field = mysqli_fetch_object($result); //the query results are objects, in this case, one object
+            $count = $field->c;
+
+            $sqlElif = "SELECT COUNT(*) AS c FROM Customer_FP WHERE authVer = '1' AND Email = '".$email."'";
+            $resultElif = mysqli_query($con, $sqlElif) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
+            $fieldElif = mysqli_fetch_object($resultElif); //the query results are objects, in this case, one object
+            $countElif = $fieldElif->c;
+
+            $sqlAdmin = "SELECT COUNT(*) AS c FROM Customer_FP WHERE authVer = '1' AND Email = '".$email."' AND Password = '".$pWord."' AND isAdmin = '1'";
+            $resultAdmin = mysqli_query($con, $sqlAdmin) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
+            $fieldAdmin = mysqli_fetch_object($resultAdmin); //the query results are objects, in this case, one object
+            $countAdmin = $fieldAdmin->c;
+
+            if ($countAdmin > 0) {
+                Header("Location:adminLanding.php");
+            }//end if
+
+            else if ($count > 0) {
+                Header("Location:userLanding.php");
+            }//end elif
+
+            elseif ($countElif < 1) {
+                $msg = "Account not authorized. Please check your email for authorization link before logging in.";
+            }//end if
+
+            else {
+                $msg = "The information entered does not match with the records in our database.";
                 $_SESSION['counter'] = $counter++;
-            } elseif ($userEmail != $eMail) {
-                $attempts = ($max - $counter);
-                $msg = "Incorrect Email. $attempts attempts remaining.";
-                $_SESSION['counter'] = $counter++;
-            } else {
-                $_SESSION['email'] = $email;
+            }//end else
+        }//end if
 
-                $sql = "select count(*) as c from user where email = '" . $eMail. "' and password = '".$pWord. "' and auth = '1'";
-                $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
-                $field = mysqli_fetch_object($result); //the query results are objects, in this case, one object
-                $count = $field->c;
-
-                if ($sql = "select count(*) as c from user where auth = '1'") {
-                    $msg = "Account not authorized. Please check your email for authorization link before logging in.";
-                }//end if
-
-                elseif ($count > 0) {
-                    Header("Location:userLanding.php");
-                }//end elif
-
-                else {
-                    $msg = "The information entered does not match with the records in our database.";
-                }//end else
-            }
-        }
-        elseif (isset($_GET['l'])) {
-            $tag = $_GET['l'];
-            if ($tag == 'r') $msg = "You have already registered with this email. Click on Forget Password to retrieve your password.";
-        }
         else {
             $disabled = "disabled";
             $msg = "Max Attempts Used. Please Try Again Later.";
