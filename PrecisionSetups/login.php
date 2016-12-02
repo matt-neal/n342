@@ -69,12 +69,17 @@ include "./head.php"
                 $field = mysqli_fetch_object($result); //the query results are objects, in this case, one object
                 $count = $field->c;
 
-                if ($sql = "select count(*) as c from user where auth = '1'"){
+                if ($sql = "select count(*) as c from user where auth = '1'") {
                     $msg = "Account not authorized. Please check your email for authorization link before logging in.";
-                }
-                elseif ($count > 0)
-                    Header ("Location:userLanding.php") ;
-                else $msg = "The information entered does not match with the records in our database.";
+                }//end if
+
+                elseif ($count > 0) {
+                    Header("Location:userLanding.php");
+                }//end elif
+
+                else {
+                    $msg = "The information entered does not match with the records in our database.";
+                }//end else
             }
         }
         elseif (isset($_GET['l'])) {

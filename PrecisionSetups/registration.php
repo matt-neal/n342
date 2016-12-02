@@ -135,13 +135,12 @@ if (isset($_POST['enter'])) {
                         //my variables and requirements
                         $code = randomCodeGenerator(50);
                         $subject = "Email Activation";
-                        $body = 'Thank you for registering at Precision Setups! We hope our website gives you the greatest experience.'.'<a href="http://corsair.cs.iupui.edu:20181/PrecisionSetups/confirmation.php?code=' . $code . '">Your code is ' . $code . '</a>';
+                        $body = 'Thank you for registering at Precision Setups '.$fName.'! We hope our website gives you the greatest experience.'.'<a href="http://corsair.cs.iupui.edu:20181/PrecisionSetups/confirmation.php?code=' . $code . '&email=' . $eMail . '">Click here to finish registration.</a>';
                         $mailer = new Mail();
 
                         //check to see if email sends, then add data to the verification database
                         if (($mailer->sendMail($eMail, $fName, $subject, $body)) == true) {
-                            $sql = "insert into Customer_FP values
-                                (null, '".$fName."', '".$lName."', '".$eMail."', '".$pWord."', '".$homePhone."', '".$cellPhone."', '".$code."', '"0"')";
+                            $sql = "insert into Customer_FP values(null, '".$fName."', '".$lName."', '".$eMail."', '".$pWord."', '".$homePhone."', '".$cellPhone."', '".$code."', 0)";
                             //a non-select statement query will return a result indicating if the query is successful
                             $result= mysqli_query($con, $sql) or die(mysqli_error($con));
                             $msg = "<b>Thank you for registering. A welcome message has been sent to the address you have just registered.</b>";
