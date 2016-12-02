@@ -5,19 +5,20 @@ Completed 10-16-16
 login.php
 -->
 <!---->
-<?php //session_start();
-//    //if this is a page that requires login always perform this session verification
-//    require_once "../inc/sessionVerify.php";
-//
-//    require_once "../inc/dbconnect.php";
-//    $_SESSION['timeout'] = time();
-//    if (isset($_SESSION['email'])) {
-//        $sql = "select * from REGISTRATION where username = '" . $_SESSION['email'] . "'";
-//    }
-//    else {
-//        Header("Location:login.php");
-//    }
-//?>
+<?php session_start();
+    //if this is a page that requires login always perform this session verification
+    require_once "../inc/sessionVerify.php";
+    require_once "../inc/util.php";
+
+    require_once "../inc/dbconnect.php";
+    $_SESSION['timeout'] = time();
+    if (isset($_SESSION['email'])) {
+        $sql = "select * from REGISTRATION where username = '" . $_SESSION['email'] . "'";
+    }
+    else {
+        Header("Location:login.php");
+    }
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -72,7 +73,7 @@ include "./head.php"
                     $msg = "Account not authorized. Please check your email for authorization link before logging in.";
                 }
                 elseif ($count > 0)
-                    Header ("Location:user.php") ;
+                    Header ("Location:userLanding.php") ;
                 else $msg = "The information entered does not match with the records in our database.";
             }
         }
@@ -85,6 +86,7 @@ include "./head.php"
             $msg = "Max Attempts Used. Please Try Again Later.";
         }
     }
+
     ?>
 
     <!-- Wrapper -->
@@ -101,6 +103,9 @@ include "./head.php"
             <input type="password" id="password" name="password" required <?php echo $disabled; ?>>
 
             <button name="enter" class="btn" type="submit">Log In</button>
+
+            <p style="text-align: center;">Not a user yet?
+                <a style="color: lightblue" href="http://corsair.cs.iupui.edu:20181/PrecisionSetups/registration.php">Register.</a></p>
         </form>
 
     </div>

@@ -1,7 +1,7 @@
 <header class="hero">
-    <?php
-    include "./svgHeader.php"
-    ?>
+<!--    --><?php
+//    include "./svgHeader.php"
+//    ?>
     <nav class="row">
         <div class="nav">
             <a href="./index.php">Home</a>

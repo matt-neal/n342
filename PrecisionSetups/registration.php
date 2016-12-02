@@ -23,7 +23,7 @@ include "./header.php";
 <body>
 
 <?php
-$con = NULL;
+//variable initialization
 $msg = "";
 $fName = "";
 $firstNameRequired = "*";
@@ -53,89 +53,108 @@ if (isset($_POST['enter'])) {
     $cellPhone = trim($_POST['cellPhone']);
     $pWordCheck = false;
 
+    //check if first name is entered
     if ($fName == "") {
         $firstNameRequired = '<span style = "color: red">*</span>';
-    };
+    };//end if for first name required
 
+    //check if last name is entered
     if ($lName == "") {
         $lastNameRequired = '<span style = "color: red">*</span>';
-    };
+    };//end if for last name required
 
-
+    //check if email is valid (if HTML check not working)
     if (!filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
         $emailRequired = '<span style="color:red">*</span>';
-    }
+    }//end if for email valid
+
+        //check password validation function to ensure within scope
         if (!pWordValidate($pWord)) {
             $msg = 'Password is not in the required format of 10 or more characters containing at least one letter and on number.';
             $pWord = "";
             $passwordConfirmation = "";
-        }
+        }//end if for pword valid
+
         else {
+
             if ($pWord != $passwordConfirmation) {
                 $msg = "Please enter matching passwords.";
-            }
+            }//end if for pword match
+
             else $pWordCheck = true;
             {
+
                 if ($eMail != $emailConfirmation) {
                     $msg = "Please enter matching emails.";
-                }
+                }//end if for email confirmation
+
                 elseif ($pWord != $passwordConfirmation) {
                     $msg = "Please enter matching passwords.";
                     $pWord = "";
                     $passwordConfirmation = "";
-                }
+                }//end elif for pword confirmation
+
                 elseif (($firstNameRequired != "*") or ($lastNameRequired != "*") or ($emailRequired != "*") or ($termsReq != "*")) {
                     $msg = "Please enter valid data.";
-                }
+                }//end elif for HTML fail validations
+
+                //starts outputting data to the database
                 else {
                     /*************************************************************
                      * Enter data into the database here
                      *************************************************************/
                     //first escape all the strings so that backslashes are added before the following characters: \x00, \n, \r, \, ', " and \x1a.
                     //This is used to prevent sql injections.
-                    $eMail = mysqli_real_escape_string(null, $eMail);
-                    $pWord = mysqli_real_escape_string(null, $pWord);
-                    $fName = mysqli_real_escape_string(null, $fName);
-                    $lName = mysqli_real_escape_string(null, $lName);
+                    $eMail = mysqli_real_escape_string($con, $eMail);
+                    $pWord = mysqli_real_escape_string($con, $pWord);
+                    $fName = mysqli_real_escape_string($con, $fName);
+                    $lName = mysqli_real_escape_string($con, $lName);
 
                     $_SESSION['email'] = $eMail;
 
                     //first check if the username already exists in the database
                     $sql = "select count(*) as c from Customer_FP where Email = '" . $eMail. "'";
 
-                    $result = mysqli_query(null, $sql) or die("Error in the consult.." . mysqli_error($con)); //send the query to the database or quit if cannot connect
+                    //send the query to the database or quit if cannot connect
+                    $result = mysqli_query($con, $sql) or die("Error in the consult.." . mysqli_error($con));
                     $count = 0;
-                    $field = mysqli_fetch_object($result); //the query results are objects, in this case, one object
+
+                    //the query results are objects, in this case, one object (the user email)
+                    $field = mysqli_fetch_object($result);
                     $count = $field->c;
-                    if ($count != 0)
-                    {	Header ("Location:login.php?l=r");}
-                    else //the username doesn't exist yet
-                    {	$sql = "insert into Customer_FP values(null, '".$fName."', '".$lName."', '".$eMail."', '".$pWord."', '".$homePhone."', '".$cellPhone."')";
-                        $result= mysqli_query($con, $sql) or die(mysqli_error($con)); //a non-select statement query will return a result indicating if the query is successful						//Commonly used functions are: Sys::getDB()->Execute, Sys::getDB()->GetOne(), Sys::getDB()->GetRows(),  Sys::getDB()->GetRow(), see details in adodb.inc.php
+
+                    //redirect to the login page if the user exists already
+                    if ($count != 0) {
+                        Header ("Location:login.php");
+                    }//end if for redirect
+
+                    //if the username doesn't exist yet
+                    else {
                         //send the email to the email registered for activating the account
                         //written by Andy Harris for his PHP/MySql book, modified for this lab to match
                         //my variables and requirements
                         $code = randomCodeGenerator(50);
                         $subject = "Email Activation";
-                        $body = 'Thank you for registering at Precision Setups! We hope our website gives you the greatest experience.'.'<a href="http://corsair.cs.iupui.edu:20181/lab4/confirmation.php?code=' . $code . '">Your code is ' . $code . '</a>';
+                        $body = 'Thank you for registering at Precision Setups! We hope our website gives you the greatest experience.'.'<a href="http://corsair.cs.iupui.edu:20181/PrecisionSetups/confirmation.php?code=' . $code . '">Your code is ' . $code . '</a>';
                         $mailer = new Mail();
+
+                        //check to see if email sends, then add data to the verification database
                         if (($mailer->sendMail($eMail, $fName, $subject, $body)) == true) {
+                            $sql = "insert into Customer_FP values
+                                (null, '".$fName."', '".$lName."', '".$eMail."', '".$pWord."', '".$homePhone."', '".$cellPhone."', '".$code."', '"0"')";
+                            //a non-select statement query will return a result indicating if the query is successful
+                            $result= mysqli_query($con, $sql) or die(mysqli_error($con));
                             $msg = "<b>Thank you for registering. A welcome message has been sent to the address you have just registered.</b>";
-                        }
+                        }//end if
+
                         else {
                             $msg = "Email not sent. ";
-                        }
-                        if ($result) $msg = "<b>Your information is entered into the database. </b>";
-                        //Insert auth code into database
-                        $sql = "insert into USER values(null, null, '".$code."')";
-                    }
-
-                    header("Location:login.php");
-                }
-            }
-        }
-}
-
+                        }//end else
+                    }//end else
+                }//end else
+            }//end else pword check
+        }//end else
+}//end if isset
 ?>
 
 <!-- Wrapper -->
