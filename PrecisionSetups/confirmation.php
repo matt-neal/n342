@@ -25,9 +25,8 @@ include "./header.php";
     $eMail = "";
     $authCode = "";
     $eMail = $_GET['email'];
-    $authCode = $_GET['code']
-
-    $sql = "UPDATE Customer_FP SET authVer= '1' WHERE Email='".$eMail."' and authCode='".$authCode."'";
+    $authCode = $_GET['code'];
+    $sql = "UPDATE Customer_FP ". "SET authVer= '1' ". "WHERE Email = '".$eMail."' AND authCode = '".$authCode."'";
     //a non-select statement query will return a result indicating if the query is successful
     $result= mysqli_query($con, $sql) or die(mysqli_error($con));
     ?>
