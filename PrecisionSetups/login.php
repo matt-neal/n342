@@ -26,7 +26,7 @@ login.php
 include "./head.php"
 ?>
 <body>
-<div id="main-wrapper">
+<div id="main-wrapper" class="login">
     <?php
     include "./header.php"
     ?>
@@ -53,8 +53,6 @@ include "./head.php"
 
         if ($counter < $max && (spamcheck($eMail)))
         {
-            $_SESSION['email'] = $email;
-
             $sql = "SELECT COUNT(*) AS c FROM Customer_FP WHERE Email = '".$email."' AND Password = '".$pWord."' AND authVer = '1'";
             $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
             $field = mysqli_fetch_object($result); //the query results are objects, in this case, one object
@@ -71,10 +69,12 @@ include "./head.php"
             $countAdmin = $fieldAdmin->c;
 
             if ($countAdmin > 0) {
+                $_SESSION['email'] = $email;
                 Header("Location:adminLanding.php");
             }//end if
 
             else if ($count > 0) {
+                $_SESSION['email'] = $email;
                 Header("Location:userLanding.php");
             }//end elif
 
@@ -93,20 +93,18 @@ include "./head.php"
             $msg = "Max Attempts Used. Please Try Again Later.";
         }
     }
-
     ?>
-
     <!-- Wrapper -->
-    <div id="wrapper" name="login">
+    <div id="wrapper" class="login">
 
-        <form action="login.php" method="post">
+        <form class="login" action="login.php" method="post">
 
            <?php print $msg; ?>
 
-            <label for="email">Email:</label>
+            <p class="label" for="email">Email:</p>
             <input type="email" id="email" placeholder="btables@iupui.edu" name="email" required <?php echo $disabled; ?>>
 
-            <label for="password">Password:</label>
+            <p class="label" for="password">Password:</p>
             <input type="password" id="password" name="password" required <?php echo $disabled; ?>>
 
             <button name="enter" class="btn" type="submit">Log In</button>
@@ -116,14 +114,12 @@ include "./head.php"
         </form>
 
     </div>
-
-
-    <?php
-    include "./footer.php"
-    ?>
 </div>
 <?php
 include "./scripts.php"
 ?>
 </body>
+<?php
+include "./footer.php"
+?>
 </html>

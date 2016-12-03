@@ -1,22 +1,185 @@
-body {
-    font-family: "Century Gothic", sans-serif;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
-
-#main-wrapper {
-    min-height: 100%;
-    padding: 0 0 100px;
-    position: relative;
-}
-
+/*SVG file CSS*/
 svg {
     width: 100%;
     margin-top: -6em;
     margin-bottom: -14em;
 }
 
+/*Navbar CSS*/
+nav .button {
+    border: 0;
+    background: #292c2f;
+    font-size: 1em;
+    color: rgba(255, 255, 255, 0.8);
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+nav .button:hover {
+    background: #282828;
+    color: white;
+}
+
+nav .button:active {
+    background: #292c2f;
+}
+
+.nav {
+    display: inline-block;
+    position: absolute;
+    margin: auto;
+    top: 8em;
+    right: 0;
+    left: 25px;
+    width: 595px;
+}
+
+.nav a {
+    padding: 11px 26px;
+    outline: none;
+    border: 3px solid #121212;
+    color: #777777;
+    vertical-align: top;
+    text-decoration: none;
+    text-shadow: 0 -1px #0F0F0F;
+    cursor: pointer;
+    transition: all .6s ease;
+}
+
+.nav a:hover {
+    color:#f6f6f6;
+}
+
+.nav a:first-child {
+    border-radius: 6px 0 0 6px;
+}
+
+.nav a:last-child {
+    border-radius: 0 6px 6px 0;
+}
+
+.nav a:active {
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.4) inset, 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.nav a.highlight {
+    color: #f6f6f6;
+}
+
+.nav a:last-child {
+    border-right: 1px solid #121212;
+}
+
+/*Body CSS*/
+body {
+    font-family: "Century Gothic", sans-serif !important;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/*Body - Registration CSS*/
+body.registation {
+    height: 125%;
+}
+
+/*Index.php CSS*/
+#main-wrapper.index {
+    box-sizing: border-box;
+    min-height: 83.1%;
+    padding: 0 0 100px;
+    position: relative;
+}
+
+/*Login.php CSS*/
+#main-wrapper.login {
+    box-sizing: border-box;
+    min-height: 83.1%;
+    padding: 0 0 100px;
+    position: relative;
+}
+
+/*Login.php CSS*/
+#main-wrapper.registration {
+    box-sizing: border-box;
+    min-height: 83%;
+    padding: 0 0 100px;
+    position: relative;
+}
+
+/*Confirmation.php CSS*/
+#main-wrapper.confirmation {
+    box-sizing: border-box;
+    min-height: 83.1%;
+    padding: 0 0 100px;
+    position: relative;
+}
+
+/*userLanding.php CSS*/
+#main-wrapper.userLanding {
+    box-sizing: border-box;
+    min-height: 83.1%;
+    padding: 0 0 100px;
+    position: relative;
+}
+
+/*userProfile.php CSS*/
+#main-wrapper.userProfile {
+    box-sizing: border-box;
+    min-height: 83.1%;
+    padding: 0 0 100px;
+    position: relative;
+}
+
+/*userInstrument.php CSS*/
+#main-wrapper.userInstrument {
+    box-sizing: border-box;
+    min-height: 83.1%;
+    padding: 0 0 100px;
+    position: relative;
+}
+
+/*userWorkOrder.php CSS*/
+#main-wrapper.userWorkOrder {
+    box-sizing: border-box;
+    min-height: 83.1%;
+    padding: 0 0 100px;
+    position: relative;
+}
+
+/*adminLanding.php CSS*/
+#main-wrapper.adminLanding {
+    box-sizing: border-box;
+    min-height: 83.1%;
+    padding: 0 0 100px;
+    position: relative;
+}
+
+/*adminUserModify.php CSS*/
+#main-wrapper.adminUserModify {
+    box-sizing: border-box;
+    min-height: 83.1%;
+    padding: 0 0 100px;
+    position: relative;
+}
+
+/*adminWorkOrder.php CSS*/
+#main-wrapper.adminWorkOrder {
+    box-sizing: border-box;
+    min-height: 83.1%;
+    padding: 0 0 100px;
+    position: relative;
+}
+
+/*adminInstrument.php CSS*/
+#main-wrapper.adminInstrument {
+    box-sizing: border-box;
+    min-height: 83.1%;
+    padding: 0 0 100px;
+    position: relative;
+}
+
+/*Footer CSS*/
 .footer {
     background-color: #292c2f;
     text-align: center;
@@ -25,7 +188,6 @@ svg {
     height: auto;
     position: absolute;
     width: 100%;
-    margin-top: 30.3em;
 }
 
 .footer p.slogan {
@@ -59,191 +221,192 @@ svg {
     padding: 0 0.4rem 0 0.8rem;
 }
 
-nav .button {
-    border: 0;
-    background: #292c2f;
-    font-size: 1em;
-    color: rgba(255, 255, 255, 0.8);
-    padding-top: 25px;
-    padding-bottom: 25px;
-}
-
-nav .button:hover {
-    background: #282828;
-    color: white;
-}
-
-nav .button:active {
-    background: #292c2f;
+/*Button CSS*/
+button {
+    border-radius: 6px;
+    color: #FFF;
+    background-color: #292c2f;
+    font-size: 18px;
+    text-align: center;
+    font-style: normal;
+    width: 50%;
+    border: 1px solid white;
+    box-shadow: 0 -1px 0 rgba(255,255,255,0.1) inset;
+    padding: 0.7em 0px 0.7em 0;
+    margin: 0em 0em 1em 6em;
 }
 
 .button {
+    border-radius: 6px;
     background: #292c2f;
 }
 
+/*Links CSS*/
 a {
     color: #292c2f;
 }
 
-.nav {
-    display: inline-block;
-    position: absolute;
-    margin: auto;
-    top: 10.4em;
-    right: 0;
-    left: 25px;
-    width: 595px;
-}
-.nav a {
-    padding: 11px 26px;
-    outline: none;
-    border: 3px solid #121212;
-    color: #777777;
-    vertical-align: top;
-    text-decoration: none;
-    text-shadow: 0 -1px #0F0F0F;
-    cursor: pointer;
-    transition: all .6s ease;
-}
-.nav a:hover {
-    color:#f6f6f6;
-}
-.nav a:first-child {
-    border-radius: 6px 0 0 6px;
-}
-.nav a:last-child {
-    border-radius: 0 6px 6px 0;
-}
-.nav a:active {
-    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.4) inset, 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-.nav a.highlight {
-    color: #f6f6f6;
+*, *:before, *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
-.nav a:last-child {
-    border-right: 1px solid #121212;
+form.registration {
+    max-width: 35%;
+    margin: 12em auto 1em;
+    padding: 1em;
+    background: black;
+    border-radius: 6px;
+    color: whitesmoke;
 }
 
-/***
-User Profile Sidebar by @keenthemes
-A component of Metronic Theme - #1 Selling Bootstrap 3 Admin Theme in Themeforest: http://j.mp/metronictheme
-Licensed under MIT
-***/
-
-/*body {*/
-    /*background: #F1F3FA;*/
-/*}*/
-
-/* Profile container */
-.profile {
-    margin: 20px 0;
+form.login {
+    max-width: 35%;
+    margin: 12em auto 0em ;
+    padding: 1em;
+    background: black;
+    border-radius: 6px;
+    color: whitesmoke;
 }
 
-/* Profile sidebar */
-.profile-sidebar {
-    padding: 20px 0 10px 0;
-    background: #fff;
-    position: absolute;
-    margin: auto;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    width: 100px;
-    height: 100px;
-    border: 0;
+form.userLanding {
+    max-width: 35%;
+    margin: 12em auto 0em;
+    padding: 1em 2em 0;
+    background: black;
+    border-radius: 6px;
 }
 
-.profile-userpic img {
-    float: none;
-    margin: 0 auto;
-    width: 50%;
-    height: 50%;
-    -webkit-border-radius: 50% !important;
-    -moz-border-radius: 50% !important;
-    border-radius: 50% !important;
+form.userProfile {
+    max-width: 35%;
+    margin: 12em auto 1em;
+    padding: 1em;
+    background: black;
+    border-radius: 6px;
 }
 
-.profile-usertitle {
-    text-align: center;
-    margin-top: 20px;
+form.userInstrument{
+    max-width: 35%;
+    margin: 12em auto 1em;
+    padding: 1em;
+    background: black;
+    border-radius: 6px;
 }
 
-.profile-usertitle-name {
-    color: #5a7391;
+form.userWorkOrder{
+    max-width: 35%;
+    margin: 12em auto 1em;
+    padding: 1em;
+    background: black;
+    border-radius: 6px;
+}
+
+form.adminLanding {
+    max-width: 35%;
+    margin: 12em auto 0em;
+    padding: 1em 2em 0;
+    background: black;
+    border-radius: 6px;
+}
+
+form.adminUserModify {
+    max-width: 35%;
+    margin: 12em auto 1em;
+    padding: 1em;
+    background: black;
+    border-radius: 6px;
+}
+
+form.adminInstrument {
+    max-width: 35%;
+    margin: 12em auto 1em;
+    padding: 1em;
+    background: black;
+    border-radius: 6px;
+}
+
+form.adminWorkOrder{
+    max-width: 35%;
+    margin: 12em auto 1em;
+    padding: 1em;
+    background: black;
+    border-radius: 6px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="date"],
+input[type="datetime"],
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="tel"],
+input[type="time"],
+input[type="url"],
+textarea,
+select {
+    background: rgba(255,255,255,0.1);
+    border: none;
     font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 7px;
-}
-
-.profile-usertitle-job {
-    text-transform: uppercase;
-    color: #5b9bd1;
-    font-size: 12px;
-    font-weight: 600;
+    height: auto;
+    margin: 0;
+    outline: 0;
+    padding: 6px;
+    width: 100%;
+    background-color: dimgrey;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
     margin-bottom: 15px;
 }
 
-.profile-userbuttons {
+input[type="radio"],
+input[type="checkbox"] {
+    margin: 0 0 12px 13px;
+}
+
+select {
+    padding: 6px;
+    height: 38px;
+    border-radius: 2px;
+}
+
+fieldset {
+    margin-bottom: 30px;
+    border: none;
+}
+
+legend {
+    font-size: 1.4em;
+    margin-bottom: 10px;
+}
+
+.label {
+    background: none !important;
+    display: inline-flex;
+    margin-bottom: 1px;
+    margin-left: -7px;
+    color: whitesmoke;
+}
+
+.label.light {
+    font-weight: 300;
+    display: inline;
+}
+
+.number {
+    background-color: #292c2f;
+    color: #fff;
+    height: 30px;
+    width: 30px;
+    display: inline-block;
+    font-size: 0.8em;
+    margin-right: 4px;
+    line-height: 30px;
     text-align: center;
-    margin-top: 10px;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.2);
+    border-radius: 100%;
 }
 
-.profile-userbuttons .btn {
-    text-transform: uppercase;
-    font-size: 11px;
-    font-weight: 600;
-    padding: 6px 15px;
-    margin-right: 5px;
-}
-
-.profile-userbuttons .btn:last-child {
-    margin-right: 0px;
-}
-
-.profile-usermenu {
-    margin-top: 30px;
-}
-
-.profile-usermenu ul li {
-    border-bottom: 1px solid #f0f4f7;
-}
-
-.profile-usermenu ul li:last-child {
-    border-bottom: none;
-}
-
-.profile-usermenu ul li a {
-    color: #93a3b5;
-    font-size: 14px;
-    font-weight: 400;
-}
-
-.profile-usermenu ul li a i {
-    margin-right: 8px;
-    font-size: 14px;
-}
-
-.profile-usermenu ul li a:hover {
-    background-color: #fafcfd;
-    color: #5b9bd1;
-}
-
-.profile-usermenu ul li.active {
-    border-bottom: none;
-}
-
-.profile-usermenu ul li.active a {
-    color: #5b9bd1;
-    background-color: #f6f9fb;
-    border-left: 2px solid #5b9bd1;
-    margin-left: -2px;
-}
-
-/* Profile Content */
-.profile-content {
-    padding: 20px;
-    background: #fff;
-    min-height: 460px;
+.spacer {
+    height: 125%;
 }

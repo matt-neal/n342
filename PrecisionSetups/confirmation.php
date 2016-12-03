@@ -18,7 +18,7 @@ include "./head.php";
 include "./header.php";
 ?>
 <body>
-<div id="main-wrapper">
+<div id="main-wrapper" class="confirmation">
 
 
     <?php
@@ -31,14 +31,14 @@ include "./header.php";
     $result= mysqli_query($con, $sql) or die(mysqli_error($con));
     ?>
 
-    <p style="text-align: center;">Thank you for registering! Click <a style="color: lightblue" href="http://corsair.cs.iupui.edu:20181/PrecisionSetups/login.php">here</a> to log in!</p>
+    <p style="text-align: center; margin-top: 17em; font-weight: bold;">Thank you for registering! Click <a style="color: lightblue" href="http://corsair.cs.iupui.edu:20181/PrecisionSetups/login.php">here</a> to log in!</p>
 
-    <?php
-    include "./footer.php"
-    ?>
 </div>
 <?php
 include "./scripts.php"
 ?>
 </body>
+<?php
+include "./footer.php"
+?>
 </html>

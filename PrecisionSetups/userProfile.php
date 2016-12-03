@@ -5,45 +5,67 @@ Completed 9-16-16
 registration.php
 -->
 
+<?php session_start();
+    //if this is a page that requires login always perform this session verification
+    require_once "./sessionVerify.php";
+    require_once "./util.php";
+
+    require_once "./dbconnect.php";
+    $_SESSION['timeout'] = time();
+    if (isset($_SESSION['email'])) {
+        $sql = "SELECT * FROM Customer_FP WHERE Email = '" . $_SESSION['email'] . "' AND isAdmin = '0'" ;
+    }
+    else {
+        Header("Location:login.php");
+    }
+?>
+
 <!DOCTYPE HTML>
 
 <html>
 
 <?php
-require_once "./util.php";
-require_once "./dbconnect.php";
 include "./head.php";
 include "./header.php";
+
+$msg = "";
+$pWord = "";
+$passwordRequired = "*";
+$passwordConfirmation = "";
+$homePhone = "";
+$cellPhone = "";
+$eMail = "";
+$authCode = "";
+$eMail = $_GET['email'];
+$authCode = $_GET['code'];
+$sql = "UPDATE Customer_FP ". "SET authVer= '1' ". "WHERE Email = '".$eMail."' AND authCode = '".$authCode."'";
+//a non-select statement query will return a result indicating if the query is successful
+$result= mysqli_query($con, $sql) or die(mysqli_error($con));
+
 ?>
 
 <body>
 
 <!-- Wrapper -->
-<div id="wrapper">
+<div id="wrapper" class="userProfile">
 
-    <form action="userProfile.php" method="post">
+    <form class="userProfile" action="userProfile.php" method="post">
 
         <?php print $msg; ?>
 
-        <label for="email">Email: <?php print $emailRequired; ?></label>
-        <input type="email" id="email" placeholder="btables@iupui.edu" name="email" value="<?php print $eMail; ?>">
-
-        <label for="emailConfirm">Confirm Email:</label>
-        <input type="email" id="emailConfirm" name="emailConfirm" placeholder="Please Confirm Email" value="<?php print $emailConfirmation; ?>">
-
-        <label for="password">Change Password: <?php print $passwordRequired; ?></label>
+        <p class="label" for="password">Change Password: <?php print $passwordRequired; ?></p>
         <input type="password" id="password" name="password" value="<?php print $pWord; ?>" >
 
-        <label for="password">Confirm New Password:</label>
+        <p class="label" for="password">Confirm New Password:</p>
         <input type="password" id="passwordConfirm" placeholder="Please Confirm Password" name="passwordConfirm" value="<?php print $passwordConfirmation; ?>" >
 
-        <label for="homePhone">Change Home Phone: (Format: 555-555-5555)</label>
+        <p class="label" for="homePhone">Change Home Phone: (Format: 555-555-5555)</p>
         <input type="text" id="homePhone" placeholder="Please Enter Home Phone #" name="homePhone" value="<?php print $homePhone; ?>" >
 
-        <label for="cellPhone">Change Cell Phone: (Format: 555-555-5555)</label>
+        <p class="label" for="cellPhone">Change Cell Phone: (Format: 555-555-5555)</p>
         <input type="text" id="cellPhone" placeholder="Please Enter Cell Phone #" name="cellPhone" value="<?php print $cellPhone; ?>" >
 
-        <label for="password">Enter Password to Change: <?php print $passwordRequired; ?></label>
+        <p class="label" for="password">Enter Password to Change: <?php print $passwordRequired; ?></p>
         <input type="password" id="password" name="password" value="<?php print $pWord; ?>" required>
 
         <button name="enter" class="btn" type="submit">Submit Changes</button>

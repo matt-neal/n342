@@ -20,7 +20,7 @@ include "./head.php";
 include "./header.php";
 ?>
 
-<body>
+<body class="registration">
 
 <?php
 //variable initialization
@@ -157,38 +157,38 @@ if (isset($_POST['enter'])) {
 ?>
 
 <!-- Wrapper -->
-<div id="wrapper">
+<div id="wrapper" class="registration">
 
-    <form action="registration.php" method="post">
+    <form class="registration" action="registration.php" method="post">
 
         <?php print $msg; ?>
 
-        <label for="firstName">First Name: <?php print $firstNameRequired; ?></label>
+        <p class="label" for="firstName">First Name: <?php print $firstNameRequired; ?></p>
         <input type="text" id="firstName" placeholder="Bobby" name="firstName" value="<?php print $fName; ?>" required>
 
-        <label for="lastName">Last Name: <?php print $lastNameRequired; ?></label>
+        <p class="label" for="lastName">Last Name: <?php print $lastNameRequired; ?></p>
         <input type="text" id="lastName" placeholder="Tables" name="lastName" value="<?php print $lName; ?>" required>
 
-        <label for="email">Email: <?php print $emailRequired; ?></label>
+        <p class="label" for="email">Email: <?php print $emailRequired; ?></p>
         <input type="email" id="email" placeholder="btables@iupui.edu" name="email" value="<?php print $eMail; ?>" required>
 
-        <label for="emailConfirm">Confirm Email:</label>
+        <p class="label" for="emailConfirm">Confirm Email:</p>
         <input type="email" id="emailConfirm" name="emailConfirm" placeholder="Please Confirm Email" value="<?php print $emailConfirmation; ?>" required>
 
-        <label for="password">Password: Must contain 10-18 characters, with at least 1 letter and 1 number. <?php print $passwordRequired; ?></label>
-        <input type="password" id="password" name="password" value="<?php print $pWord; ?>" required>
+        <p class="label" for="password">Password: <?php print $passwordRequired; ?></p>
+        <input type="password" id="password" placeholder="10-18 characters, with 1 letter and 1 number." name="password" value="<?php print $pWord; ?>" required>
 
-        <label for="password">Confirm Password:</label>
+        <p class="label" for="password">Confirm Password:</p>
         <input type="password" id="passwordConfirm" placeholder="Please Confirm Password" name="passwordConfirm" value="<?php print $passwordConfirmation; ?>" required>
 
-        <label for="homePhone">Home Phone: (Format: 555-555-5555)</label>
-        <input type="text" id="homePhone" placeholder="Please Enter Home Phone #" name="homePhone" value="<?php print $homePhone; ?>" required>
-
-        <label for="cellPhone">Cell Phone: (Format: 555-555-5555)</label>
+        <p class="label" for="cellPhone">Cell Phone: (Format: 555-555-5555)</p>
         <input type="text" id="cellPhone" placeholder="Please Enter Cell Phone #" name="cellPhone" value="<?php print $cellPhone; ?>" required>
 
-        <label>Terms and Conditions: <?php print $termsReq; ?></label>
-        <input type="checkbox" id="terms" value="terms" name="terms" required><label class="light" for="terms">I Agree to the Terms and Conditions:</label>
+        <p class="label" for="homePhone">Home Phone: (Format: 555-555-5555)</p>
+        <input type="text" id="homePhone" placeholder="Please Enter Home Phone #" name="homePhone" value="<?php print $homePhone; ?>">
+
+        <p class="label">I Agree to the Terms and Conditions <?php print $termsReq; ?>
+        <input type="checkbox" id="terms" value="terms" name="terms" required></p>
 
         <button name="enter" class="btn" type="submit">Sign Up</button>
     </form>
