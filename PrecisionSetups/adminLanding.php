@@ -4,8 +4,7 @@ require_once "./sessionVerify.php";
 require_once "./util.php";
 require_once "./dbconnect.php";
 $_SESSION['timeout'] = time();
-if (isset($_SESSION['email'])) {
-    $sql = "SELECT * FROM Customer_FP WHERE Email = '" . $_SESSION['email'] . "' AND isAdmin = '1'" ;
+if ($_SESSION['email'] != "") {
 }
 else {
     Header("Location:login.php");

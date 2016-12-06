@@ -6,18 +6,9 @@ login.php
 -->
 <!---->
 <?php session_start();
-    //if this is a page that requires login always perform this session verification
-    require_once "../inc/sessionVerify.php";
     require_once "../inc/util.php";
-
+    require_once "./hash.php";
     require_once "../inc/dbconnect.php";
-    $_SESSION['timeout'] = time();
-    if (isset($_SESSION['email'])) {
-        $sql = "select * from REGISTRATION where username = '" . $_SESSION['email'] . "'";
-    }
-    else {
-        Header("Location:login.php");
-    }
 ?>
 
 <!DOCTYPE html>
@@ -42,6 +33,8 @@ include "./head.php"
     $eMail = "";
     $counter = 0;
     $disabled = "";
+    $pVerify = "";
+    $pVerify = false;
 
     if (isset($_POST['enter'])) {
 
@@ -53,7 +46,9 @@ include "./head.php"
 
         if ($counter < $max && (spamcheck($eMail)))
         {
-            $sql = "SELECT COUNT(*) AS c FROM Customer_FP WHERE Email = '".$email."' AND Password = '".$pWord."' AND authVer = '1'";
+            $pVerify = verifyHash($eMail, $pWord);
+
+            $sql = "SELECT COUNT(*) AS c FROM Customer_FP WHERE Email = '".$email."' AND authVer = '1'";
             $result = mysqli_query($con, $sql) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
             $field = mysqli_fetch_object($result); //the query results are objects, in this case, one object
             $count = $field->c;
@@ -63,17 +58,17 @@ include "./head.php"
             $fieldElif = mysqli_fetch_object($resultElif); //the query results are objects, in this case, one object
             $countElif = $fieldElif->c;
 
-            $sqlAdmin = "SELECT COUNT(*) AS c FROM Customer_FP WHERE authVer = '1' AND Email = '".$email."' AND Password = '".$pWord."' AND isAdmin = '1'";
+            $sqlAdmin = "SELECT COUNT(*) AS c FROM Customer_FP WHERE authVer = '1' AND Email = '".$email."' AND isAdmin = '1'";
             $resultAdmin = mysqli_query($con, $sqlAdmin) or die(mysqli_error($con)); //send the query to the database or quit if cannot connect
             $fieldAdmin = mysqli_fetch_object($resultAdmin); //the query results are objects, in this case, one object
             $countAdmin = $fieldAdmin->c;
 
-            if ($countAdmin > 0) {
+            if ($countAdmin > 0 and $pVerify) {
                 $_SESSION['email'] = $email;
                 Header("Location:adminLanding.php");
             }//end if
 
-            else if ($count > 0) {
+            elseif ($count > 0 and $pVerify) {
                 $_SESSION['email'] = $email;
                 Header("Location:userLanding.php");
             }//end elif

@@ -135,5 +135,3 @@ function pWordValidate($field) {
         else return false;
     }
 }
-
-?>

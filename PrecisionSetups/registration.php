@@ -16,6 +16,7 @@ registration.php
 require_once "./util.php";
 require_once "../mail/mail.class.php";
 require_once "./dbconnect.php";
+require_once "./hash.php";
 include "./head.php";
 include "./header.php";
 ?>
@@ -38,8 +39,6 @@ $emailConfirmation = "";
 $homePhone = "";
 $cellPhone = "";
 $termsReq = "*";
-
-
 
 if (isset($_POST['enter'])) {
     //ensure no white space
@@ -140,9 +139,10 @@ if (isset($_POST['enter'])) {
 
                         //check to see if email sends, then add data to the verification database
                         if (($mailer->sendMail($eMail, $fName, $subject, $body)) == true) {
-                            $sql = "insert into Customer_FP values(null, '".$fName."', '".$lName."', '".$eMail."', '".$pWord."', '".$homePhone."', '".$cellPhone."', '".$code."', 0, 0)";
+                            $sql = "insert into Customer_FP values(null, '".$fName."', '".$lName."', '".$eMail."', null, null, '".$homePhone."', '".$cellPhone."', '".$code."', 0, 0)";
                             //a non-select statement query will return a result indicating if the query is successful
                             $result= mysqli_query($con, $sql) or die(mysqli_error($con));
+                            encrypt($eMail, $pWord);
                             $msg = "<b>Thank you for registering. A welcome message has been sent to the address you have just registered.</b>";
                         }//end if
 
