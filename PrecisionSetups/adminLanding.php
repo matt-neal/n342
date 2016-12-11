@@ -24,13 +24,13 @@ include "./head.php"
         Header ("Loction:adminUserModify.php");
     }
 
-    elseif (isset($_POST['instruments'])) {
-        Header ("Location:adminInstrument.php");
-    }
-
-    elseif (isset($_POST['orders'])) {
-        Header ("Location:adminWorkOrders.php");
-    }
+//    elseif (isset($_POST['instruments'])) {
+//        Header ("Location:adminInstrument.php");
+//    }
+//
+//    elseif (isset($_POST['orders'])) {
+//        Header ("Location:adminWorkOrders.php");
+//    }
 
     elseif (isset($_POST['profile'])) {
         Header("Location:adminUserModify.php");
@@ -41,8 +41,8 @@ include "./head.php"
     <div id="adminPage">
         <form class="adminLanding" action="adminLanding.php" method="post">
             <button name="profile" class="btn" type="submit">Modify Users</button>
-            <button name="instruments" class="btn" type="submit">Manage Instruments</button>
-            <button name="orders" class="btn" type="submit">Modify Work Order</button>
+<!--            <button name="instruments" class="btn" type="submit">Manage Instruments</button>-->
+<!--            <button name="orders" class="btn" type="submit">Modify Work Order</button>-->
         </form>
     </div>
 

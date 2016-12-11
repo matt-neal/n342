@@ -30,58 +30,102 @@ require_once "./dbconnect.php";
 include "./head.php";
 include "./header.php";
 
+$currentEmail = "";
+$instrumentBrand = "";
+$instrumentModel = "";
+$capID = "";
+$nutID = "";
+$switchID = "";
+$potID = "";
+$customerID = "";
+$SQL = "";
+$result = "";
+$sql = "";
 $msg = "";
-$pWord = "";
-$passwordRequired = "*";
-$passwordConfirmation = "";
-$homePhone = "";
-$cellPhone = "";
-$emailRequired = "*";
-$eMail = "";
-$emailConfirmation = "";
+
+$currentEmail = $_SESSION['email'];
+
+if (isset($_POST['enter'])) {
+    $instrumentBrand = trim($_POST['brand']);
+    $instrumentModel = trim($_POST['model']);
+
+    $SQL = "SELECT CustomerID FROM Customer_FP WHERE Email='".$currentEmail."'";
+    $result = mysqli_query($con, $SQL) or die(mysqli_error($con));
+    $customerID = mysqli_fetch_row($result);
+
+    $SQL = "SELECT CapID FROM Instrument_FP WHERE Brand='".$instrumentBrand."' AND Model='".$instrumentModel."' AND CustomerID='1'";
+    $result = mysqli_query($con, $SQL) or die(mysqli_error($con));
+    $capID = mysqli_fetch_row($result);
+
+    $SQL = "SELECT NutID FROM Instrument_FP WHERE Brand='".$instrumentBrand."' AND Model='".$instrumentModel."' AND CustomerID='1'";
+    $result = mysqli_query($con, $SQL) or die(mysqli_error($con));
+    $nutID = mysqli_fetch_row($result);
+
+    $SQL = "SELECT SwitchID FROM Instrument_FP WHERE Brand='".$instrumentBrand."' AND Model='".$instrumentModel."' AND CustomerID='1'";
+    $result = mysqli_query($con, $SQL) or die(mysqli_error($con));
+    $switchID = mysqli_fetch_row($result);
+
+    $SQL = "SELECT PotID FROM Instrument_FP WHERE Brand='".$instrumentBrand."' AND Model='".$instrumentModel."' AND CustomerID='1'";
+    $result = mysqli_query($con, $SQL) or die(mysqli_error($con));
+    $potID = mysqli_fetch_row($result);
+
+    $sql = "INSERT INTO Instrument_FP values(null, '".$customerID[0]."','".$instrumentBrand."','".$instrumentModel."','".$capID[0]."','".$nutID[0]."','".$switchID[0]."','".$potID[0]."')";
+    //a non-select statement query will return a result indicating if the query is successful
+    $result = mysqli_query($con, $sql) or die(mysqli_error($con));
+    $msg = "Update Successful";
+}
+
+elseif (isset($_POST['back'])) {
+    Header ("Location:userLanding.php");
+}
 ?>
 
 <body>
-
+<?php print $msg; ?>
+<div id="main-wrapper" class="userInstrument">
 <!-- Wrapper -->
 <div id="wrapper" class="userInstrument">
 
-    <form action="registration.php" method="post" class="userInstrument">
 
-        <?php print $msg; ?>
+    <form class="userInstrument" action="userInstrument.php" method="post">
 
-        <p class="label" for="firstName">First Name: <?php print $firstNameRequired; ?></p>
-        <input type="text" id="firstName" placeholder="Bobby" name="firstName" value="<?php print $fName; ?>" required>
 
-        <p class="label" for="lastName">Last Name: <?php print $lastNameRequired; ?></p>
-        <input type="text" id="lastName" placeholder="Tables" name="lastName" value="<?php print $lName; ?>" required>
 
-        <p class="label" for="email">Email: <?php print $emailRequired; ?></p>
-        <input type="email" id="email" placeholder="btables@iupui.edu" name="email" value="<?php print $eMail; ?>" required>
+        <p class="label" for="brand">Select Brand: </p>
+        <?php
+        $sql = "SELECT DISTINCT Instrument_FP.Brand FROM Instrument_FP";
 
-        <p class="label" for="emailConfirm">Confirm Email:</p>
-        <input type="email" id="emailConfirm" name="emailConfirm" placeholder="Please Confirm Email" value="<?php print $emailConfirmation; ?>" required>
+        //send the query to the database or quit if cannot connect
+        $result = mysqli_query($con, $sql) or die(mysqli_error($con));
 
-        <p class="label" for="password">Password: Must contain 10-18 characters, with at least 1 letter and 1 number. <?php print $passwordRequired; ?></p>
-        <input type="password" id="password" name="password" value="<?php print $pWord; ?>" required>
+        echo "<select style='color: whitesmoke;' name='brand'>";
+        while($row = mysqli_fetch_row($result)){
+            echo "<option value='{$row[0]}'>$row[0]</option>";
+        }
+        echo "</select>";
+        ?>
 
-        <p class="label" for="password">Confirm Password:</p>
-        <input type="password" id="passwordConfirm" placeholder="Please Confirm Password" name="passwordConfirm" value="<?php print $passwordConfirmation; ?>" required>
+        <p class="label" for="model">Select Model: </p>
+        <?php
+        $sql = "SELECT DISTINCT Model FROM Instrument_FP";
 
-        <p class="label" for="homePhone">Home Phone: (Format: 555-555-5555)</p>
-        <input type="text" id="homePhone" placeholder="Please Enter Home Phone #" name="homePhone" value="<?php print $homePhone; ?>" required>
+        //send the query to the database or quit if cannot connect
+        $result = mysqli_query($con, $sql) or die(mysqli_error($con));
 
-        <p class="label" for="cellPhone">Cell Phone: (Format: 555-555-5555)</p>
-        <input type="text" id="cellPhone" placeholder="Please Enter Cell Phone #" name="cellPhone" value="<?php print $cellPhone; ?>" required>
+        echo "<select style='color: whitesmoke;' name='model'>";
+        while($row = mysqli_fetch_row($result)){
+            echo "<option value='{$row[0]}'>$row[0]</option>";
+        }
+        echo "</select>";
+        ?>
 
-        <p class="label">Terms and Conditions: <?php print $termsReq; ?></p>
-        <input type="checkbox" id="terms" value="terms" name="terms" required><p class="label" class="light" for="terms">I Agree to the Terms and Conditions:</p>
+        <button name="enter" class="btn" type="submit">Create My Instrument</button>
 
-        <button name="enter" class="btn" type="submit">Sign Up</button>
+        <button name="back" class="btn" type="submit">Back</button>
     </form>
 
 </div>
-
+</div>
 <!-- Scripts -->
 <script src="../assets/js/jquery.min.js"></script>
 <!--<script src="assets/js/main.js"></script> -->

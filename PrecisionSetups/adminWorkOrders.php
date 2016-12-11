@@ -29,6 +29,32 @@ require_once "./util.php";
 require_once "./dbconnect.php";
 include "./head.php";
 include "./header.php";
+
+$currentEmail = "";
+$instrumentWO = "";
+$serviceWO = "";
+$instrumentWo = "";
+$customerID = "";
+$SQL = "";
+$result = "";
+$sql = "";
+$msg = "";
+
+$currentEmail = $_SESSION['email'];
+
+if (isset($_POST['enter'])) {
+    $instrumentWO = trim($_POST['instrument']);
+    $serviceWO = trim($_POST['service']);
+
+    $SQL = "SELECT CustomerID FROM Customer_FP WHERE Email='".$currentEmail."'";
+    $result = mysqli_query($con, $SQL) or die(mysqli_error($con));
+    $customerID = mysqli_fetch_row($result);
+
+    $sql = "INSERT INTO WorkOrder_FP values(null, '11', '".$customerID[0]."','".$instrumentWO."','".$serviceWO."')";
+    //a non-select statement query will return a result indicating if the query is successful
+    $result = mysqli_query($con, $sql) or die(mysqli_error($con));
+    $msg = "Update Successful";
+}
 ?>
 
 <body>
@@ -36,38 +62,41 @@ include "./header.php";
 <!-- Wrapper -->
 <div id="wrapper" class="adminWorkOrder">
 
-    <form class="adminWorkOrder" action="registration.php" method="post">
+    <form class="adminWorkOrder" action="adminWorkOrders.php" method="post">
 
-        <?php print $msg; ?>
+        <p class="label" for="instrument">Select Instrument: </p>
+        <?php
+        $sql = "SELECT Instrument_FP.Brand, Instrument_FP.Model FROM WorkOrder_FP JOIN (Instrument_FP) ON (Instrument_FP.InstrumentID=WorkOrder_FP.InstrumentID)";
 
-        <p class="label" for="firstName">First Name: <?php print $firstNameRequired; ?></p>
-        <input type="text" id="firstName" placeholder="Bobby" name="firstName" value="<?php print $fName; ?>" required>
+        //send the query to the database or quit if cannot connect
+        $result = mysqli_query($con, $sql) or die(mysqli_error($con));
 
-        <p class="label" for="lastName">Last Name: <?php print $lastNameRequired; ?></p>
-        <input type="text" id="lastName" placeholder="Tables" name="lastName" value="<?php print $lName; ?>" required>
+        echo "<select style='color: whitesmoke;' name='instrument'>";
+        while($row = mysqli_fetch_row($result)){
+            echo "<option value='{$row[0]}'>$row[0]</option>";
+        }
+        echo "</select>";
+        ?>
 
-        <p class="label" for="email">Email: <?php print $emailRequired; ?></p>
-        <input type="email" id="email" placeholder="btables@iupui.edu" name="email" value="<?php print $eMail; ?>" required>
+        <input type="instrumentBox" id="instrumentBox" name="instrumentBox" value="instrument">
 
-        <p class="label" for="emailConfirm">Confirm Email:</p>
-        <input type="email" id="emailConfirm" name="emailConfirm" placeholder="Please Confirm Email" value="<?php print $emailConfirmation; ?>" required>
+        <p class="label" for="service">Select Service: </p>
+        <?php
+        $sql = "SELECT Service_FP.ServiceDesc FROM WorkOrder_FP JOIN (Service_FP) ON (Service_FP.ServiceID=WorkOrder_FP.ServiceID)";
 
-        <p class="label" for="password">Password: Must contain 10-18 characters, with at least 1 letter and 1 number. <?php print $passwordRequired; ?></p>
-        <input type="password" id="password" name="password" value="<?php print $pWord; ?>" required>
+        //send the query to the database or quit if cannot connect
+        $result = mysqli_query($con, $sql) or die(mysqli_error($con));
 
-        <p class="label" for="password">Confirm Password:</p>
-        <input type="password" id="passwordConfirm" placeholder="Please Confirm Password" name="passwordConfirm" value="<?php print $passwordConfirmation; ?>" required>
+        echo "<select style='color: whitesmoke;' name='service'>";
+        while($row = mysqli_fetch_row($result)){
+            echo "<option value='{$row[0]}'>$row[0]</option>";
+        }
+        echo "</select>";
+        ?>
 
-        <p class="label" for="homePhone">Home Phone: (Format: 555-555-5555)</p>
-        <input type="text" id="homePhone" placeholder="Please Enter Home Phone #" name="homePhone" value="<?php print $homePhone; ?>" required>
+        <input type="serviceBox" id="serviceBox" name="serviceBox" value="service">
 
-        <p class="label" for="cellPhone">Cell Phone: (Format: 555-555-5555)</p>
-        <input type="text" id="cellPhone" placeholder="Please Enter Cell Phone #" name="cellPhone" value="<?php print $cellPhone; ?>" required>
-
-        <p class="label">Terms and Conditions: <?php print $termsReq; ?></p>
-        <input type="checkbox" id="terms" value="terms" name="terms" required><p class="label" class="light" for="terms">I Agree to the Terms and Conditions:</p>
-
-        <button name="enter" class="btn" type="submit">Sign Up</button>
+        <button name="enter" class="btn" type="submit">Create Work Order</button>
     </form>
 
 </div>

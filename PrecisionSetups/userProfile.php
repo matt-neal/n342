@@ -36,9 +36,11 @@ $homePhone = "";
 $cellPhone = "";
 $currentEmail = "";
 $currentPassword = "";
+$required = "";
 
 
 if (isset($_POST['enter'])) {
+    $required = "required";
     $currentEmail = $_SESSION['email'];
     $pWord = trim($_POST['password']);
     $homePhone = trim($_POST['homePhone']);
@@ -68,6 +70,10 @@ if (isset($_POST['enter'])) {
         $msg = "Update Successful";
     }
 }
+
+elseif (isset($_POST['back'])) {
+    Header ("Location:userLanding.php");
+}
 ?>
 
 <body>
@@ -92,9 +98,11 @@ if (isset($_POST['enter'])) {
         <input type="text" id="cellPhone" placeholder="Please Enter Cell Phone #" name="cellPhone">
 
         <p class="label" for="currentPassword">Enter Password to Change:</p>
-        <input type="password" id="currentPassword" name="currentPassword" required>
+        <input type="password" id="currentPassword" name="currentPassword" <?php echo $required?>>
 
         <button name="enter" class="btn" type="submit">Submit Changes</button>
+
+        <button name="back" class="btn" type="submit">Back</button>
     </form>
 
 </div>

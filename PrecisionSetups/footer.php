@@ -1,5 +1,4 @@
-
-<footer class="footer">
+<footer class="footer" id="primary">
     <div class="row">
         <div class="small-12 columns">
             <p class="slogan">Guitar and Bass Setups, Minor Repair, Fret Leveling, and More</p>

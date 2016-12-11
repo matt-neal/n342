@@ -5,7 +5,7 @@ Completed 10-16-16
 login.php
 -->
 <!---->
-<?php session_start();
+<?php
     require_once "../inc/util.php";
     require_once "./hash.php";
     require_once "../inc/dbconnect.php";

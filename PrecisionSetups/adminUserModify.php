@@ -75,15 +75,19 @@ if (isset($_POST['enter'])) {
         $msg = "Update Successful";
     }
 }
+
+elseif (isset($_POST['back'])) {
+    Header ("Location:adminLanding.php");
+}
 ?>
 <body>
-
+<?php print $msg; ?>
 <!-- Wrapper -->
 <div id="wrapper" class="adminUserModify">
 
     <form class="adminUserModify" action="adminUserModify.php" method="post">
 
-        <?php print $msg; ?>
+
 
         <p class="label" for="userEmail">Select User: </p>
         <?php
@@ -92,7 +96,7 @@ if (isset($_POST['enter'])) {
         //send the query to the database or quit if cannot connect
         $result = mysqli_query($con, $sql) or die(mysqli_error($con));
 
-        echo "<select name='userEmail'>";
+        echo "<select style='color: whitesmoke;' name='userEmail'>";
         while($row = mysqli_fetch_row($result)){
             echo "<option value='{$row[0]}'>$row[0]</option>";
         }
@@ -112,6 +116,8 @@ if (isset($_POST['enter'])) {
         <input type="text" id="cellPhone" placeholder="Please Enter Cell Phone #" name="cellPhone">
 
         <button name="enter" class="btn" type="submit">Submit Changes</button>
+
+        <button name="back" class="btn" type="submit">Back</button>
     </form>
 
 </div>

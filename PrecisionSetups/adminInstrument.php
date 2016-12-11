@@ -46,38 +46,40 @@ $emailConfirmation = "";
 <!-- Wrapper -->
 <div id="wrapper" class="adminInstrument">
 
-    <form action="registration.php" method="post" class="adminInstrument">
+    <form action="adminInstrument.php" method="post" class="adminInstrument">
 
-        <?php print $msg; ?>
+        <p class="label" for="userEmail">Select User: </p>
+        <?php
+        $sql = "SELECT Email FROM Customer_FP AS customers";
 
-        <p class="label" for="firstName">First Name: <?php print $firstNameRequired; ?></p>
-        <input type="text" id="firstName" placeholder="Bobby" name="firstName" value="<?php print $fName; ?>" required>
+        //send the query to the database or quit if cannot connect
+        $result = mysqli_query($con, $sql) or die(mysqli_error($con));
 
-        <p class="label" for="lastName">Last Name: <?php print $lastNameRequired; ?></p>
-        <input type="text" id="lastName" placeholder="Tables" name="lastName" value="<?php print $lName; ?>" required>
+        echo "<select style='color: whitesmoke;' name='userEmail'>";
+        while($row = mysqli_fetch_row($result)){
+            echo "<option value='{$row[0]}'>$row[0]</option>";
+        }
+        echo "</select>";
+        ?>
 
-        <p class="label" for="email">Email: <?php print $emailRequired; ?></p>
-        <input type="email" id="email" placeholder="btables@iupui.edu" name="email" value="<?php print $eMail; ?>" required>
+        <p class="label" for="brand">Select Brand: </p>
+        <?php
+        $SQL = "SELECT Instrument_FP.CustomerID FROM Instrument_FP JOIN Customer_FP ON Instrument_FP.CustomerID=Customer_FP.CustomerID WHERE Customer.Email=userEmail";
+        $RESULT = mysqli_query($con, $sql) or die(mysqli_error($con));
+        $sql = "SELECT Brand FROM Instrument_FP WHERE CustomerID = '".$RESULT."'";
 
-        <p class="label" for="emailConfirm">Confirm Email:</p>
-        <input type="email" id="emailConfirm" name="emailConfirm" placeholder="Please Confirm Email" value="<?php print $emailConfirmation; ?>" required>
+        //send the query to the database or quit if cannot connect
+        $result = mysqli_query($con, $sql) or die(mysqli_error($con));
 
-        <p class="label" for="password">Password: Must contain 10-18 characters, with at least 1 letter and 1 number. <?php print $passwordRequired; ?></p>
-        <input type="password" id="password" name="password" value="<?php print $pWord; ?>" required>
+        echo "<select style='color: whitesmoke;' name='brand'>";
+        while($row = mysqli_fetch_row($result)){
+            echo "<option value='{$row[0]}'>$row[0]</option>";
+        }
+        echo "</select>";
+        ?>
 
-        <p class="label" for="password">Confirm Password:</p>
-        <input type="password" id="passwordConfirm" placeholder="Please Confirm Password" name="passwordConfirm" value="<?php print $passwordConfirmation; ?>" required>
+        <input type="text" id="brand" placeholder="Brand Modification" name="homePhone">
 
-        <p class="label" for="homePhone">Home Phone: (Format: 555-555-5555)</p>
-        <input type="text" id="homePhone" placeholder="Please Enter Home Phone #" name="homePhone" value="<?php print $homePhone; ?>" required>
-
-        <p class="label" for="cellPhone">Cell Phone: (Format: 555-555-5555)</p>
-        <input type="text" id="cellPhone" placeholder="Please Enter Cell Phone #" name="cellPhone" value="<?php print $cellPhone; ?>" required>
-
-        <p class="label">Terms and Conditions: <?php print $termsReq; ?></p>
-        <input type="checkbox" id="terms" value="terms" name="terms" required><p class="label" class="light" for="terms">I Agree to the Terms and Conditions:</p>
-
-        <button name="enter" class="btn" type="submit">Sign Up</button>
     </form>
 
 </div>
